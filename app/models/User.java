@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import java.util.Date;
+
 @Entity
 public class User extends Model{
 
@@ -22,14 +24,12 @@ public class User extends Model{
     @Constraints.Required
     public String password;
 
-    @Constraints.Required
-    public DateTime create_date;
+    public Date create_date;
 
     public static Finder<Long, User> find = new Finder(Long.class, User.class);
 
-    //Static initialization
-    User() {
-        create_date = new DateTime();
+    public User() {
+        create_date = new Date();
     }
 
     public Long getId() {
