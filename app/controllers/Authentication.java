@@ -1,6 +1,7 @@
 package controllers;
 
 import play.*;
+import play.api.libs.Crypto;
 import play.data.Form;
 import play.mvc.*;
 
@@ -24,7 +25,7 @@ public class Authentication extends Controller {
     }
 
     /*
-    * Processing Login user
+    * Processing authentication
     *
     * route: Post /login
     */
@@ -35,10 +36,12 @@ public class Authentication extends Controller {
         if(filledForm.hasErrors()) {
             return badRequest("Something is went wrong");
         } else {
-            User c= filledForm.get();
-            currentUser = User.verify(c.username, c.password);
+            User user   = filledForm.get();
+            currentUser = User.verify(user.username, Crypto.sign(user.password));
+
             if (currentUser != null) {
-                session("connected", currentUser.id.toString());
+                session().clear();
+                session("user_is", currentUser.id.toString());
                 return redirect(routes.Application.index());
             }
 
@@ -46,8 +49,13 @@ public class Authentication extends Controller {
         }
     }
 
+    /*
+    * clear the session
+    *
+    * route: Get /logout
+    */
     public static Result logout() {
-        return ok(index.render("Your new application is ready."));
-
+        session().clear();
+        return redirect(routes.Application.index());
     }
 }
