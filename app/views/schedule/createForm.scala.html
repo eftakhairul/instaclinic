@@ -1,0 +1,28 @@
+@(computerForm: Form[Schedule])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+
+@main {
+    
+    <h1>Add a computer</h1>
+     @for(err <- computerForm.errors()) {
+     	@err<br>
+     }
+     @computerForm.errorsAsJson()
+    @form(routes.ScheduleController.save()) {
+        
+        <fieldset>
+            @inputText(computerForm("startTime"), '_label -> "Start date")
+            @inputText(computerForm("endTime"), '_label -> "End date")
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Create this schedule" class="btn primary"> or 
+            <a href="@routes.ScheduleController.list()" class="btn">Cancel</a> 
+        </div>
+        
+    }
+    
+}
