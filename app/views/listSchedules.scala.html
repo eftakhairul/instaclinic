@@ -35,15 +35,8 @@
     </th>
 }
 
-@main {
-    
+@main("Schedules List"){    
     <h1 id="homeTitle">@Messages("schedules.list.title", currentPage.getTotalRowCount)</h1>
-
-    @if(flash.containsKey("success")) {
-        <div class="alert-message warning">
-            <strong>Done!</strong> @flash.get("success")
-        </div>
-    } 
 
     <div id="actions">
         
@@ -124,7 +117,6 @@
         </div>
         
     }
-        
 }
 
             

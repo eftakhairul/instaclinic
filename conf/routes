@@ -15,15 +15,17 @@ POST    /login                            controllers.Authentication.loginFormPr
 GET     /logout                           controllers.Authentication.logout()
 
 # Schedule list (look at the default values for pagination parameters)
-GET     /computers                  controllers.ScheduleController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /schedules                  controllers.ScheduleController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 # Add Schedule
-GET     /computers/new              controllers.ScheduleController.create()
-POST    /computers                  controllers.ScheduleController.save()
+GET     /schedules/new              controllers.ScheduleController.create()
+
+#Save Schedule
+POST    /schedules                  controllers.ScheduleController.save()
 
 # Edit existing Schedule
-GET     /computers/:id              controllers.ScheduleController.edit(id:Long)
-POST    /computers/:id              controllers.ScheduleController.update(id:Long)
+GET     /schedules/:id              controllers.ScheduleController.edit(id:Long)
+POST    /schedules/:id              controllers.ScheduleController.update(id:Long)
 
 # Delete a Schedule
-POST    /computers/:id/delete       controllers.ScheduleController.delete(id:Long)
+POST    /schedules/:id/delete       controllers.ScheduleController.delete(id:Long)

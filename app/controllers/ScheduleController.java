@@ -9,7 +9,6 @@ import com.avaje.ebean.Ebean;
 import play.*;
 import play.data.Form;
 import play.mvc.*;
-import models.Computer;
 import models.Schedule;
 import models.User;
 import views.html.*;
@@ -42,7 +41,7 @@ public class ScheduleController extends Controller
    */
   public static Result list(int page, String sortBy, String order, String filter) {
       return ok(
-          views.html.schedule.list.render(
+          views.html.listSchedules.render(
               Schedule.page(page, 10, sortBy, order, filter),
               sortBy, order, filter
           )
@@ -59,7 +58,7 @@ public class ScheduleController extends Controller
     		  Schedule.find.byId(id)
       );
       return ok(
-    		  views.html.schedule.editForm.render(id, computerForm)
+    		  views.html.editSchedule.render(id, computerForm)
       );
   }
   
@@ -72,7 +71,7 @@ public class ScheduleController extends Controller
       Form<Schedule> computerForm = form(Schedule.class).bindFromRequest();
       if(computerForm.hasErrors()) {
     	  //computerForm.errors()[0].
-          return badRequest(views.html.schedule.editForm.render(id, computerForm));
+          return badRequest(views.html.editSchedule.render(id, computerForm));
       }
       computerForm.get().update(id);
       flash("success", "Computer " + computerForm.get().getId() + " has been updated");
@@ -85,7 +84,7 @@ public class ScheduleController extends Controller
   public static Result create() {
       Form<Schedule> scheduleForm = form(Schedule.class);
       return ok(
-    		  views.html.schedule.createForm.render(scheduleForm)
+    		  views.html.createSchedule.render(scheduleForm)
       );
   }
   
@@ -96,7 +95,7 @@ public class ScheduleController extends Controller
       Form<Schedule> scheduleForm = form(Schedule.class).bindFromRequest();
       if(scheduleForm.hasErrors()) {
     	  //flash("error", scheduleForm.errorsAsJson());
-          return badRequest(views.html.schedule.createForm.render(scheduleForm));
+          return badRequest(views.html.createSchedule.render(scheduleForm));
       }
       scheduleForm.get().save();
       flash("success", "Computer " + scheduleForm.get().getId() + " has been created");

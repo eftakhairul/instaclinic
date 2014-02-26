@@ -3,11 +3,9 @@
 @import helper._
 
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
-
-@main {
     
     <h1>Edit Schedule</h1>
-    
+@main("Edit Schedule"){    
     @form(routes.ScheduleController.update(id)) {
         
         <fieldset>
@@ -24,5 +22,4 @@
     @form(routes.ScheduleController.delete(id), 'class -> "topRight") {
         <input type="submit" value="Delete this computer" class="btn danger">
     }
-    
-}
+}    
