@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.Date;
 
-import javax.media.jai.RenderableCollectionImageFactory;
+//import javax.media.jai.RenderableCollectionImageFactory;
 
 import com.avaje.ebean.Ebean;
 

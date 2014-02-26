@@ -15,3 +15,7 @@ dist
 .cache
 .settings
 /.target
+
+
+#sql files
+1.sql
