@@ -2,6 +2,7 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import play.*;
+import play.api.libs.Crypto;
 import play.mvc.*;
 import models.User;
 
@@ -16,9 +17,10 @@ public class Application extends Controller {
 
 
     public static Result testData(){
+
         User newUser = new User();
-        newUser.setPassword("hello");
-        newUser.setUsername("rain");
+        newUser.setPassword(Crypto.sign("hello123"));
+        newUser.setUsername("roman");
         Ebean.save(newUser);
 
         return ok("Data is saved");
