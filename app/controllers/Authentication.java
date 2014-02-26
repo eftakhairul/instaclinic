@@ -6,7 +6,7 @@ import play.data.Form;
 import play.mvc.*;
 
 import views.html.*;
-import java.util.List;                                          Crypto.sign
+import java.util.List;
 
 import models.User;
 
@@ -50,7 +50,7 @@ public class Authentication extends Controller {
     }
 
     /*
-    * clear the session
+    * Clear the session
     *
     * route: Get /logout
     */
