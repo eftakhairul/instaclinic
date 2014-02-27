@@ -8,6 +8,7 @@ import play.db.ebean.Model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import java.util.Date;
 
@@ -23,6 +24,9 @@ public class User extends Model{
 
     @Constraints.Required
     public String password;
+
+    @OneToOne(mappedBy="user")
+    private Patient patient;
 
     public Date create_date;
 
