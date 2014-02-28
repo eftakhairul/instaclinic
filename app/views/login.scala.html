@@ -4,6 +4,6 @@
 Login
 @form(routes.Authentication.loginFormProcess()) {
     @inputText(loginForm("username"))
-    @inputText(loginForm("password"))
+    @inputPassword(loginForm("password"))
     <input type="submit" name="Login"/>
 }
