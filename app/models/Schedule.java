@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import com.avaje.ebean.Page;
+import com.avaje.ebean.annotation.EnumMapping;
 
 import play.data.format.Formats;
 import play.data.format.Formats.DateTime;
@@ -20,11 +21,11 @@ public class Schedule extends Model
 	@Id
 	private int id;
 	
-	@Formats.DateTime(pattern="yyyy-MM-dd")
+	@Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
 	@Constraints.Required
 	private Date startTime;
 	
-	@Formats.DateTime(pattern="yyyy-MM-dd")
+	@Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
 	@Constraints.Required
 	private Date endTime;
 	
