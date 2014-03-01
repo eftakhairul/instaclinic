@@ -1,4 +1,4 @@
-@(id: Long, computerForm: Form[Appointment])
+@(id: Long, appointmentForm: Form[Appointment])
 
 @import helper._
 
@@ -9,7 +9,9 @@
     @form(routes.AppointmentController.update(id)) {
         
         <fieldset>
-            @inputText(computerForm("id"), '_label -> "Id")
+            @select(appointmentForm("meetingType"), 
+            	models.MeetingType.values.toList.map(v => (v.toString, Messages(v.toString()))), 
+            		'_label -> "Meeting Type")
         </fieldset>
         
         <div class="actions">
