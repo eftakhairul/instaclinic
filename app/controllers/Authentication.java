@@ -37,11 +37,11 @@ public class Authentication extends Controller {
             return badRequest("Something is went wrong");
         } else {
             User user   = filledForm.get();
-            currentUser = User.verify(user.username, Crypto.sign(user.password));
+            currentUser = User.verify(user.getUsername(), Crypto.sign(user.getPassword()));
 
             if (currentUser != null) {
                 session().clear();
-                session("user_is", currentUser.id.toString());
+                session("user_is", currentUser.getId().toString());
                 return redirect(routes.Application.index());
             } else {
                 filledForm.reject("password", "Password doesn't match, Please try again.");
