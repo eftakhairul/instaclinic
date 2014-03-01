@@ -100,10 +100,9 @@ public class AppointmentController extends Controller
       appointment.setRoom(room);
       System.out.println("room : "+room.getId());
       
-      //TODO change to logged in patient id
-      User user = User.findById((long)1);
+      User user = User.findById(Long.parseLong(session().get("user_is")));
       appointment.setUser(user);
-      System.out.println("User : "+room.getId());
+      System.out.println("User : "+user.getUsername());
       
       appointment.save();
       
