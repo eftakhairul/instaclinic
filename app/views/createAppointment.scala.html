@@ -10,15 +10,15 @@
     @form(routes.AppointmentController.save()) {
         
         <fieldset>
-             @*@select(appointmentForm("meetingType"), 
+             @select(appointmentForm("meetingType"), 
             	models.MeetingType.values.toList.map(v => (v.toString, Messages(v.toString()))), 
             		'_label -> "Meeting Type")
-           
+            @*
             select(appointmentForm("user"), 
             		options(("Doctor 1","Doctor 2")), 
             		'_label -> "Select Doctor")*@
             @select(appointmentForm("schedule"), 
-            		options(Schedule.options), 
+            		options(Schedule.findByType(MeetingType.REGULAR)), 
             		'_label -> "Select Schedule")
             @*
             @inputText(appointmentForm("credit card"), 

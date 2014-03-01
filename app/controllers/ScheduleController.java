@@ -2,11 +2,15 @@ package controllers;
 
 import java.util.Date;
 
+import org.joda.time.Days;
+
 import com.avaje.ebean.Ebean;
 
 import play.*;
 import play.data.Form;
+import play.libs.Time;
 import play.mvc.*;
+import models.MeetingType;
 import models.Schedule;
 import models.User;
 import views.html.*;
@@ -91,11 +95,29 @@ public class ScheduleController extends Controller
    */
   public static Result save() {
       Form<Schedule> scheduleForm = form(Schedule.class).bindFromRequest();
+      
       if(scheduleForm.hasErrors()) {
     	  //flash("error", scheduleForm.errorsAsJson());
           return badRequest(views.html.createSchedule.render(scheduleForm));
       }
+      
+      Schedule schedule = scheduleForm.get();
+      long timeDiff = (schedule.getEndTime().getTime() - schedule.getStartTime().getTime())/60000;
+      
+      if(timeDiff == 20) {
+    	  schedule.setMeetingType(MeetingType.REGULAR);
+      }
+      else if(timeDiff == 60) {
+    	  schedule.setMeetingType(MeetingType.YEARLY);
+      }
+      else {
+    	  flash("error", "schedule must be 20 minutes or 60 minutes in length");
+          return badRequest(views.html.createSchedule.render(scheduleForm));
+      }
+      
+      
       scheduleForm.get().save();
+      
       flash("success", "Computer " + scheduleForm.get().getId() + " has been created");
       return GO_HOME;
   }

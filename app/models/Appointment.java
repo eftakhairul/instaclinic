@@ -38,9 +38,6 @@ public class Appointment extends Model
 	//@JoinColumn(name = "payment_id")
 	//private Payment payment;
 	
-	private MeetingType meetingType;
-	
-	
 	public Appointment(Room room, Schedule schedule)
 	{
 		this.schedule = schedule;

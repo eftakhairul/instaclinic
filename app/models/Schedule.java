@@ -37,6 +37,8 @@ public class Schedule extends Model
 	//the doctor
 	private User user;
 	
+	private MeetingType meetingType;
+	
 	public Schedule(Date startTime, Date endTime)
 	{
 		this.startTime = startTime;
@@ -68,6 +70,16 @@ public class Schedule extends Model
 		this.endTime =  endTime;
 	}
 	
+	public void setMeetingType(MeetingType meetingType)
+	{
+		this.meetingType = meetingType;
+	}
+	
+	public MeetingType getMeetingType()
+	{
+		return this.meetingType;
+	}
+	
 	public String toString()
 	{
 		return id+"";
@@ -96,6 +108,17 @@ public class Schedule extends Model
     
     public static Schedule findById(int id) {
         return Ebean.find(Schedule.class, id);
+    }
+    
+    public static Map<String,String> findByType(MeetingType type) {
+    	List<Schedule> schedules = find.where()
+        		.eq("meetingType", type)
+        		.findList();
+    	LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        for(Schedule c: schedules) {
+            options.put(c.toString(), c.startTime.toString() + " To " +c.endTime.toString());
+        }
+        return options;
     }
     
     public static Map<String,String> options() {

@@ -1,0 +1,24 @@
+@(id: Long, computerForm: Form[Appointment])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+    
+    <h1>Edit Appointment</h1>
+@main("Edit Appointment"){    
+    @form(routes.AppointmentController.update(id)) {
+        
+        <fieldset>
+            @inputText(computerForm("id"), '_label -> "Id")
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Save this appointment" class="btn primary"> or 
+            <a href="@routes.AppointmentController.list()" class="btn">Cancel</a> 
+        </div>       
+    }
+    
+    @form(routes.AppointmentController.delete(id), 'class -> "topRight") {
+        <input type="submit" value="Delete this appointment" class="btn danger">
+    }
+}    

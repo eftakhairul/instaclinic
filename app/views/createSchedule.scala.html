@@ -1,20 +1,16 @@
 @(computerForm: Form[Schedule])
-
 @import helper._
 @import models._
 
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
 @main("Create Schedule"){      
     <h1>Add a computer</h1>
+    <p class="text-error">
+ 		@flash.get("error")
+    </p>
     @form(routes.ScheduleController.save()) {
-        
         <fieldset>
             @inputText(computerForm("startTime"), '_label -> "Start date")
-            <!--  <label for="scheduleType">Schedule Type</label>
-            <select name="scheduleType">
-            	<option>Regular</option>
-            	<option>Yearly</option>
-            </select>-->
             @inputText(computerForm("endTime"), '_label -> "End date")
         </fieldset>
         

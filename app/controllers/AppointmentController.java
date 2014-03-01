@@ -7,11 +7,7 @@ import com.avaje.ebean.Ebean;
 import play.*;
 import play.data.Form;
 import play.mvc.*;
-import models.Payment;
-import models.Room;
-import models.Schedule;
-import models.Appointment;
-import models.User;
+import models.*;
 import views.html.*;
 
 public class AppointmentController extends Controller 
@@ -51,11 +47,11 @@ public class AppointmentController extends Controller
    * @param id Id of the computer to edit
    */
   public static Result edit(Long id) {
-      Form<Schedule> computerForm = form(Schedule.class).fill(
-    		  Schedule.find.byId(id)
+      Form<Appointment> computerForm = form(Appointment.class).fill(
+    		  Appointment.find.byId(id)
       );
       return ok(
-    		  views.html.editSchedule.render(id, computerForm)
+    		  views.html.editAppointment.render(id, computerForm)
       );
   }
   
@@ -65,13 +61,13 @@ public class AppointmentController extends Controller
    * @param id Id of the computer to edit
    */
   public static Result update(Long id) {
-      Form<Schedule> computerForm = form(Schedule.class).bindFromRequest();
-      if(computerForm.hasErrors()) {
+      Form<Appointment> appointmentForm = form(Appointment.class).bindFromRequest();
+      if(appointmentForm.hasErrors()) {
     	  //computerForm.errors()[0].
-          return badRequest(views.html.editSchedule.render(id, computerForm));
+          return badRequest(views.html.editAppointment.render(id, appointmentForm));
       }
-      computerForm.get().update(id);
-      flash("success", "Computer " + computerForm.get().getId() + " has been updated");
+      appointmentForm.get().update(id);
+      flash("success", "Computer " + appointmentForm.get().getId() + " has been updated");
       return GO_HOME;
   }
   
@@ -98,7 +94,20 @@ public class AppointmentController extends Controller
       //System.out.println(payment.getId());
       //appointment.setPayment(payment);
       //payment.setAppointment(appointment);
+      
+      //TODO check room availability
+      Room room = Room.getDemo();
+      appointment.setRoom(room);
+      System.out.println("room : "+room.getId());
+      
+      //TODO change to logged in patient id
+      User user = User.findById((long)1);
+      appointment.setUser(user);
+      System.out.println("User : "+room.getId());
+      
       appointment.save();
+      
+      System.out.println("New Appointment created : "+appointment.getId());
       
       //System.out.print(scheduleId);
       /*if(appointmentForm.hasErrors()) {
@@ -106,6 +115,7 @@ public class AppointmentController extends Controller
           return badRequest(views.html.createAppointment.render(appointmentForm));
       }
       appointmentForm.get().save();*/
+      
       flash("success", "Computer " + appointment.getId() + " has been created");
       return GO_HOME;
   }
@@ -114,7 +124,7 @@ public class AppointmentController extends Controller
    * Handle computer deletion
    */
   public static Result delete(Long id) {
-	  Schedule.find.ref(id).delete();
+	  Appointment.find.ref(id).delete();
       flash("success", "Computer has been deleted");
       return GO_HOME;
   }
