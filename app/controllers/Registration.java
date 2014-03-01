@@ -26,7 +26,6 @@ public class Registration extends Controller {
     /**
      * Handle the form submission.
      * route /save
-     *
      */
     public static Result submit() {
 
