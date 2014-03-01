@@ -1,0 +1,20 @@
+@(RegistrationFrom: Form[User])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+@main("Create Schedule"){      
+    <h1>Patient Registration</h1>
+    @form(routes.Registration.save()) {
+        
+        <fieldset>
+            @inputText(RegistrationFrom("startTime"), '_label -> "Start date")
+            @inputText(RegistrationFrom("endTime"), '_label -> "End date")
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Create this schedule" class="btn primary"> or 
+            <a href="@routes.ScheduleController.list()" class="btn">Cancel</a> 
+        </div>       
+    }   
+}
