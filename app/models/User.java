@@ -16,25 +16,27 @@ import java.util.Date;
 public class User extends Model{
 
     @Id
-    public Long id;
+    private Long id;
 
     @Column(unique=true)
     @Constraints.Required
-    public String username;
+    private String username;
 
     @Constraints.Required
     @Constraints.MinLength(6)
-    public String password;
+    private String password;
 
     @OneToOne(mappedBy="user")
     private Patient patient;
 
-    public Date create_date;
+    private UserRole userRole;
+
+    private Date create_date;
 
     public static Finder<Long, User> find = new Finder(Long.class, User.class);
 
     public User() {
-        create_date = new Date();
+        this.create_date = new Date();
     }
 
     public Long getId() {
@@ -42,7 +44,7 @@ public class User extends Model{
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
@@ -57,6 +59,14 @@ public class User extends Model{
         this.password = password;
     }
 
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
+    public UserRole getUserRole() {
+        return this.userRole;
+    }
+
     public static User verify(String username, String password) {
 
         return find.where()
@@ -65,8 +75,8 @@ public class User extends Model{
                    .findUnique();
     }
 
-    public static void create(User newuser) {
-        newuser.save();
+    public static void create(User newUser) {
+        newUser.save();
     }
 
     public static void delete(Long id) {

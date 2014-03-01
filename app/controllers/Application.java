@@ -26,11 +26,11 @@ public class Application extends Controller {
         newUser.setPassword(Crypto.sign("hello123"));
         newUser.setUsername("roman");
         Ebean.save(newUser);
-        
+
         Room room = new Room();
         Ebean.save(room);
 
         return ok("Data is saved");
     }
-  
+
 }
