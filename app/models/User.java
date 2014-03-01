@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 public class User extends Model{
@@ -85,5 +88,25 @@ public class User extends Model{
 
     public static User findById(Long id) {
         return find.byId(id);
+    }
+
+
+    /**
+     * Return all user by a specific User Role
+     *
+     * return LinkedHashMap options
+     */
+    public static Map<String,String> findByUserRole(UserRole role) {
+        List<User> users = find.where()
+                               .eq("userRole", role)
+                               .findList();
+
+        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+
+        for(User user: users) {
+            options.put(user.getId().toString(), user.getUsername());
+        }
+
+        return options;
     }
 }
