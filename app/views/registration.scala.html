@@ -5,13 +5,13 @@
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
 @main("Create Schedule"){      
     <h1>Patient Registration</h1>
-    @form(routes.Registration.submit()) {
+    @form(routes.Registration.submit) {
 
         <fieldset>
 
             <legend>Login Information</legend>
 
-            @inputText(RegistrationFrom("userame"), '_label -> "Username")
+            @inputText(RegistrationFrom("username"), '_label -> "Username")
             @inputPassword(RegistrationFrom("password"),
             '_label -> "Password",
             '_help -> "A password must be at least 6 characters. "

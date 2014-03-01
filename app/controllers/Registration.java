@@ -36,6 +36,8 @@ public class Registration extends Controller {
 //            filledForm.reject("accept", "You must accept the terms and conditions");
 //        }
 
+
+
         // Check repeated password
         if(!filledForm.field("password").valueOr("").isEmpty()) {
             if(!filledForm.field("password").valueOr("").equals(filledForm.field("repeatPassword").value())) {
@@ -50,12 +52,15 @@ public class Registration extends Controller {
             }
         }
 
+
+
         if(filledForm.hasErrors()) {
+            System.out.println(filledForm.errors());
             return badRequest(views.html.registration.render(filledForm));
         } else {
             User newUser = filledForm.get();
             Ebean.save(newUser);
-            return redirect("/login");
+            return redirect(routes.Authentication.login());
         }
     }
 }

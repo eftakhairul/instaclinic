@@ -43,9 +43,11 @@ public class Authentication extends Controller {
                 session().clear();
                 session("user_is", currentUser.id.toString());
                 return redirect(routes.Application.index());
+            } else {
+                filledForm.reject("password", "Password doesn't match, Please try again.");
             }
 
-            return ok("bad man nanana");
+            return badRequest(views.html.login.render(filledForm));
         }
     }
 
