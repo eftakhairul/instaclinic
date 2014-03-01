@@ -1,19 +1,24 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.annotation.EnumMapping;
 
 import play.data.format.Formats;
 import play.data.format.Formats.DateTime;
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
+import play.db.ebean.*;
+
 
 @Entity
 public class Schedule extends Model 
@@ -28,6 +33,9 @@ public class Schedule extends Model
 	@Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
 	@Constraints.Required
 	private Date endTime;
+	
+	//the doctor
+	private User user;
 	
 	public Schedule(Date startTime, Date endTime)
 	{
@@ -60,6 +68,11 @@ public class Schedule extends Model
 		this.endTime =  endTime;
 	}
 	
+	public String toString()
+	{
+		return id+"";
+	}
+	
 	/**
      * Generic query helper for entity Schedule with id Long
      */
@@ -79,5 +92,30 @@ public class Schedule extends Model
             find.where()
                 .findPagingList(pageSize)
                 .getPage(page);
+    }
+    
+    public static Schedule findById(int id) {
+        return Ebean.find(Schedule.class, id);
+    }
+    
+    public static Map<String,String> options() {
+        //@SuppressWarnings("unchecked")
+		List<Schedule> companies = Ebean.createQuery(Schedule.class).findList();
+        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        for(Schedule c: companies) {
+            options.put(c.toString(), c.startTime.toString() + " To " +c.endTime.toString());
+        }
+        return options;
+    }
+    
+    /**
+     * Demo schedules to work with
+     * @return
+     */
+    public static ArrayList<Schedule> demo()
+    {
+    	ArrayList<Schedule> schedules = new ArrayList<Schedule>();
+    	schedules.add(new Schedule(new Date(), new Date()));
+    	return schedules;
     }
 }

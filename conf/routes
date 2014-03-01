@@ -16,16 +16,25 @@ GET     /logout                           controllers.Authentication.logout()
 
 # Schedule list (look at the default values for pagination parameters)
 GET     /schedules                  controllers.ScheduleController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-
 # Add Schedule
 GET     /schedules/new              controllers.ScheduleController.create()
-
 #Save Schedule
 POST    /schedules                  controllers.ScheduleController.save()
-
 # Edit existing Schedule
 GET     /schedules/:id              controllers.ScheduleController.edit(id:Long)
 POST    /schedules/:id              controllers.ScheduleController.update(id:Long)
-
 # Delete a Schedule
 POST    /schedules/:id/delete       controllers.ScheduleController.delete(id:Long)
+
+
+# appointment list (look at the default values for pagination parameters)
+GET     /appointments                  controllers.AppointmentController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+# Add appointment
+GET     /appointments/new              controllers.AppointmentController.create()
+#Save appointment
+POST    /appointments/save             controllers.AppointmentController.save()
+# Edit existing appointment
+GET     /appointments/:id              controllers.AppointmentController.edit(id:Long)
+POST    /appointments/:id              controllers.AppointmentController.update(id:Long)
+# Delete an appointment
+POST    /appointments/:id/delete       controllers.AppointmentController.delete(id:Long)
