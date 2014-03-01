@@ -6,19 +6,41 @@
 @main("Create Schedule"){      
     <h1>Patient Registration</h1>
     @form(routes.Registration.save()) {
-        
-        <fieldset>
-            @inputText(RegistrationFrom("userame"), '_label -> "Username")
-            @inputPassword(RegistrationFrom("password"), '_label -> "Password")
-            @inputText(RegistrationFrom("startTime"), '_label -> "Birth Date")
-            @inputText(RegistrationFrom("startTime"), '_label -> "Health Card Number.")
-            @inputText(RegistrationFrom("startTime"), '_label -> "Phone Number")
 
+        <fieldset>
+
+            <legend>Login Information</legend>
+
+            @inputText(RegistrationFrom("userame"), '_label -> "Username")
+            @inputPassword(RegistrationFrom("password"),
+            '_label -> "Password",
+            '_help -> "A password must be at least 6 characters. "
+            )
+
+            @inputPassword(RegistrationFrom("repeatPassword"),
+            '_label -> "Repeat password",
+            '_help -> "Please repeat your password again.",
+            '_error -> RegistrationFrom.error("password")
+            )
 
         </fieldset>
         
+        <fieldset>
+            <legend>Details</legend>
+
+
+            @inputText(RegistrationFrom("startTime"), '_label -> "Birth Date")
+            @inputText(RegistrationFrom("startTime"), '_label -> "Health Card Number.")
+            @inputText(RegistrationFrom("startTime"), '_label -> "Phone Number")
+            @select(
+            RegistrationFrom("profile.country"),
+            options = options("M"->"Male","F"->"Female"),
+            '_label -> "Gender"
+            )
+        </fieldset>
+        
         <div class="actions">
-            <input type="submit" value="Create this schedule" class="btn primary"> or 
+            <input type="submit" value="Save" class="btn primary"> or
             <a href="@routes.ScheduleController.list()" class="btn">Cancel</a> 
         </div>       
     }   
