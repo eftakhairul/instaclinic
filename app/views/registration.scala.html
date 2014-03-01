@@ -8,8 +8,13 @@
     @form(routes.Registration.save()) {
         
         <fieldset>
-            @inputText(RegistrationFrom("startTime"), '_label -> "Start date")
-            @inputText(RegistrationFrom("endTime"), '_label -> "End date")
+            @inputText(RegistrationFrom("userame"), '_label -> "Username")
+            @inputPassword(RegistrationFrom("password"), '_label -> "Password")
+            @inputText(RegistrationFrom("startTime"), '_label -> "Birth Date")
+            @inputText(RegistrationFrom("startTime"), '_label -> "Health Card Number.")
+            @inputText(RegistrationFrom("startTime"), '_label -> "Phone Number")
+
+
         </fieldset>
         
         <div class="actions">

@@ -18,6 +18,5 @@ public class Registration extends Controller {
 
     public static Result save() {
         return ok(views.html.registration.render(RegistrationFrom));
-
     }
 }
