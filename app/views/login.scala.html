@@ -1,9 +1,21 @@
 @( loginForm: Form[User])
+
 @import helper._
 
-Login
-@form(routes.Authentication.loginFormProcess()) {
-    @inputText(loginForm("username"))
-    @inputPassword(loginForm("password"))
-    <input type="submit" name="Login"/>
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+
+@main("Create Schedule"){
+
+    @form(routes.Authentication.loginFormProcess()) {
+
+        <fieldset>
+            <legend>Login</legend>
+            @inputText(loginForm("username"))
+            @inputPassword(loginForm("password"))
+        </fieldset>
+        <div class="actions">
+            <input type="submit" value="Save" class="btn primary"> or
+            <a href="@routes.ScheduleController.list()" class="btn">Cancel</a>
+        </div>
+    }
 }
