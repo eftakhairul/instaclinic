@@ -23,6 +23,12 @@ public class Patient extends Model {
     @Constraints.Required
     private String health_card_no;
 
+    private String birthday;
+
+    private String gender;
+
+    private String phone_number;
+
     public Date create_date;
 
     public Patient() {

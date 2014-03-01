@@ -19,7 +19,7 @@ GET     /logout                           controllers.Authentication.logout()
 
 #Registeation
 GET /registration                         controllers.Registration.index()
-POST /save                                controllers.Registration.save()
+POST /save                                controllers.Registration.submit()
 
 # Schedule list (look at the default values for pagination parameters)
 GET     /schedules                  controllers.ScheduleController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")

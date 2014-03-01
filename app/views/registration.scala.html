@@ -5,7 +5,7 @@
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
 @main("Create Schedule"){      
     <h1>Patient Registration</h1>
-    @form(routes.Registration.save()) {
+    @form(routes.Registration.submit()) {
 
         <fieldset>
 
@@ -29,14 +29,13 @@
             <legend>Details</legend>
 
 
-            @inputText(RegistrationFrom("startTime"), '_label -> "Birth Date")
-            @inputText(RegistrationFrom("startTime"), '_label -> "Health Card Number.")
-            @inputText(RegistrationFrom("startTime"), '_label -> "Phone Number")
-            @select(
-            RegistrationFrom("profile.country"),
-            options = options("M"->"Male","F"->"Female"),
-            '_label -> "Gender"
-            )
+            @inputText(RegistrationFrom("Patient.birthday"), '_label -> "Birth Date")
+            @inputText(RegistrationFrom("Patient.health_card_no"), '_label -> "Health Card Number.")
+            @inputText(RegistrationFrom("Patient.phone_numbere"), '_label -> "Phone Number")
+            @select(RegistrationFrom("Patient.gender"),
+                    options = options("M"->"Male","F"->"Female"),
+                    '_label -> "Gender"
+                    )
         </fieldset>
         
         <div class="actions">
