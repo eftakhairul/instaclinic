@@ -1,7 +1,10 @@
 package models;
 
-import play.db.ebean.Model;
+import com.avaje.ebean.annotation.EnumMapping;
 
-public class MeetingType extends Model {
-
+@EnumMapping(nameValuePairs="REGULAR=R, YEARLY=Y")
+public enum MeetingType 
+{
+	REGULAR,
+	YEARLY		
 }
