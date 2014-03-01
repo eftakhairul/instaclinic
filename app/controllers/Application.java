@@ -7,6 +7,7 @@ import play.api.libs.Crypto;
 import play.mvc.*;
 import models.Room;
 import models.User;
+import models.UserRole;
 import views.html.*;
 
 public class Application extends Controller {
@@ -27,6 +28,7 @@ public class Application extends Controller {
         User newUser = new User();
         newUser.setPassword(Crypto.sign("hello123"));
         newUser.setUsername("roman");
+        newUser.setUserRole(UserRole.DOCTOR);
         Ebean.save(newUser);
 
         Room room = new Room();
