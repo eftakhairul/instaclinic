@@ -11,7 +11,7 @@
     @if(total == 0) {
 
         <div class="well">
-            <em>Nothing to display</em>
+            <em>Nothing in your cart.</em>
         </div>
 
         } else {
@@ -23,7 +23,7 @@
                     <thead>
                         <tr>
                             <td>
-                                Doctor Name
+                                Room Number
                             </td>
                             <td>
                                 Date And Time
@@ -38,8 +38,9 @@
 
                     @for((key, appointment) <- appointmnets) {
                     <tr>
-                        <td><a href="#">1</a></td>
-                        <td>@appointment.getCreateDate().format("dd MMM yyyy")</td>
+                        <td><a href="#">@appointment.getRoom().getId()</a></td>
+                        <td>@appointment.getSchedule().getStartTime().format("dd MMM yyyy") + "-" + @appointment.getSchedule().getEndTime().format("dd MMM yyyy") </td>
+                        <td><input type="hidden" name="appointment_id[]" value="@appointment.getId()" /> <a class="btn btn-danger" href="@routes.AppointmentController.delete(appointment.getRoom().getId())"> Delete </a></td>
                     </tr>
                     }
                     </tbody>

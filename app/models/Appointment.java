@@ -147,4 +147,9 @@ public class Appointment extends Model
 
         return options;
     }
+
+    public static int findCountByUserId(Long id) {
+
+        return find.where().eq("user_id", id).findRowCount();
+    }
 }
