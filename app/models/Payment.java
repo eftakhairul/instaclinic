@@ -17,14 +17,13 @@ public class Payment extends Model
 	private int id;
 
 	private String creditCardNo;
-	
-	private double amount;
+
+    private double amount;
 	
 	//@OneToOne(mappedBy="payment")
 	//private Appointment appointment;
 	
-	public Payment()
-	{
+	public Payment() {
 		
 	}
 	
@@ -32,9 +31,20 @@ public class Payment extends Model
 	{
 		return this.id;
 	}
-	/*
-	public void setAppointment(Appointment appointment)
-	{
-		this.appointment = appointment;
-	}*/
+
+    public String getCreditCardNo() {
+        return creditCardNo;
+    }
+
+    public void setCreditCardNo(String creditCardNo) {
+        this.creditCardNo = creditCardNo;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 }
