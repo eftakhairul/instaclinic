@@ -1,52 +1,21 @@
 @(currentPage: Page[Appointment], currentSortBy: String, currentOrder: String, currentFilter: String)
 
-@****************************************
-* Helper generating navigation links    *
-****************************************@
-@link(newPage:Int, newSortBy:String) = @{
-    
-    var sortBy = currentSortBy
-    var order = currentOrder
-    
-    if(newSortBy != null) {
-        sortBy = newSortBy
-        if(currentSortBy == newSortBy) {
-            if(currentOrder == "asc") {
-                order = "desc"
-            } else {
-                order = "asc"
-            }
-        } else {
-            order = "asc"
-        }
-    }
-    
-    // Generate the link
-    routes.AppointmentController.list(newPage, sortBy, order, currentFilter)
-    
-}
-
 @**********************************
 * Helper generating table headers *
 ***********************************@
 @header(key:String, title:String) = {
     <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
-        <a href="@link(0, key)">@title</a>
+        @title
     </th>
 }
 
 @main("Appointments List"){    
-    <div id="actions">
-        
-        <!--<form action="@link(0, "id")" method="GET">
-            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by schedule name...">
-            <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
-        </form> -->
+    <div id="actions" class="span12">
         
         <a class="btn success" id="add" href="@routes.AppointmentController.create()">Add a new Appointment</a>
         
     </div>
-    
+    <div class="clear span12">
     @if(currentPage.getTotalRowCount == 0) {
         
         <div class="well">
@@ -59,6 +28,7 @@
             <thead>
                 <tr>
                     @header("id", "appointment id")
+                    @header("create_date", "create date")
                 </tr>
             </thead>
             <tbody>
@@ -66,39 +36,15 @@
                 @for(appointment <- currentPage.getList) {
                     <tr>
                         <td><a href="@routes.AppointmentController.edit(appointment.getId())">@appointment.getId()</a></td>
+                        <td>@appointment.getCreateDate()</td>
                     </tr>
                 }
 
             </tbody>
         </table>
 
-        <div id="pagination" class="pagination">
-            <ul>
-                @if(currentPage.hasPrev) {
-                    <li class="prev">
-                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Previous</a>
-                    </li>
-                } else {
-                    <li class="prev disabled">
-                        <a>&larr; Previous</a>
-                    </li>
-                }
-                <li class="current">
-                    <a>Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
-                </li>
-                @if(currentPage.hasNext) {
-                    <li class="next">
-                        <a href="@link(currentPage.getPageIndex + 1, null)">Next &rarr;</a>
-                    </li>
-                } else {
-                    <li class="next disabled">
-                        <a>Next &rarr;</a>
-                    </li>
-                }
-            </ul>
-        </div>
-        
     }
+    </div>
 }
 
             

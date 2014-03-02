@@ -19,15 +19,14 @@
 				            <li><a href="@routes.Application.index()" title="InstaClinic Home">Home</a></li>
 				            <li><a href="@routes.ScheduleController.list()" title="About CodeXpertz.com">Schedules</a></li>
 				            <li><a href="@routes.AppointmentController.list()" title="Contact CodeXpertz Administrators">Appointments</a></li>
+				            <li><a href="@routes.Authentication.login()" title="Contact CodeXpertz Administrators">Login</a></li>
 				        </ul>
 				    </div>
 				</div>
 	    	</div>
 	    	<div class="span12">
-	    		<div class="clear">
-		    		<h1>@title</h1>
-		        	@content
-		    	</div>
+	    		<h1>@title</h1>
+	        	@content
 	    	</div>
 		</div>
     </body>
