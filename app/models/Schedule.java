@@ -6,8 +6,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.avaje.ebean.Ebean;
@@ -34,7 +36,7 @@ public class Schedule extends Model
 	@Constraints.Required
 	private Date endTime;
 	
-	//the doctor
+	@ManyToOne(cascade=CascadeType.ALL)
 	private User user;
 	
 	private MeetingType meetingType;
@@ -80,6 +82,16 @@ public class Schedule extends Model
 		return this.meetingType;
 	}
 	
+	public void setUser(User user)
+	{
+		this.user = user;
+	}
+	
+	public User getUser()
+	{
+		return this.user;
+	}
+	
 	public String toString()
 	{
 		return id+"";
@@ -121,11 +133,23 @@ public class Schedule extends Model
         return options;
     }
     
-    public static Map<String,String> options() {
-        //@SuppressWarnings("unchecked")
-		List<Schedule> companies = Ebean.createQuery(Schedule.class).findList();
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
-        for(Schedule c: companies) {
+    public static Map<String,String> findByDoctor(User user) {
+    	List<Schedule> schedules = find.where()
+        		.eq("user", user)
+        		.findList();
+    	LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        for(Schedule c: schedules) {
+            options.put(c.toString(), c.startTime.toString() + " To " +c.endTime.toString());
+        }
+        return options;
+    }
+    
+    public static Map<String,String> findByDoctorAndType(User user, MeetingType type) {
+    	List<Schedule> schedules = find.where()
+        		.eq("user", user).eq("meetingType", type)
+        		.findList();
+    	LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        for(Schedule c: schedules) {
             options.put(c.toString(), c.startTime.toString() + " To " +c.endTime.toString());
         }
         return options;

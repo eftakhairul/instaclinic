@@ -1,12 +1,16 @@
 package controllers;
 
+import java.io.StringWriter;
 import java.util.Date;
+import java.util.Map;
 
 import com.avaje.ebean.Ebean;
 
 import play.*;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.*;
+import scala.util.parsing.json.JSON;
 import models.*;
 import views.html.*;
 
@@ -90,10 +94,6 @@ public class AppointmentController extends Controller
       Schedule schedule = Schedule.findById(scheduleId);
       
       Appointment appointment = new Appointment(new Room(), schedule);
-      //Payment payment = new Payment();
-      //System.out.println(payment.getId());
-      //appointment.setPayment(payment);
-      //payment.setAppointment(appointment);
       
       //TODO check room availability
       Room room = Room.getDemo();
@@ -102,7 +102,7 @@ public class AppointmentController extends Controller
       
       User user = User.findById(Long.parseLong(session().get("user_is")));
       appointment.setUser(user);
-      System.out.println("User : "+user.getUsername());
+      //System.out.println("User : "+user.getUsername());
       
       appointment.save();
       
@@ -126,6 +126,20 @@ public class AppointmentController extends Controller
 	  Appointment.find.ref(id).delete();
       flash("success", "Computer has been deleted");
       return GO_HOME;
+  }
+  
+  public static Result getFilteredSchedules(String meetingType, int doctorId)
+  {
+	  Map<String,String> result;
+	  if(doctorId != 0){
+		  result = Schedule.findByDoctorAndType(User.findById((long)(doctorId)), MeetingType.valueOf(meetingType));  
+	  }
+	  else {
+		  result = Schedule.findByType(MeetingType.valueOf(meetingType));  
+	  }
+	  StringWriter out = new StringWriter();
+	  String jsonText = Json.toJson(result).toString();
+	  return ok(jsonText);
   }
   
 }
