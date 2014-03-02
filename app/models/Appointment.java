@@ -41,7 +41,7 @@ public class Appointment extends Model
 	
 	//@OneToOne
 	//@JoinColumn(name = "payment_id")
-	//private PaymentProcess payment;
+	//private PaymentController payment;
 
     private Date create_date;
 
@@ -95,12 +95,12 @@ public class Appointment extends Model
         return this.create_date;
     }
 	
-	/*public PaymentProcess getPayment()
+	/*public PaymentController getPayment()
 	{
 		return this.payment;
 	}
 	
-	public void setPayment(PaymentProcess payment)
+	public void setPayment(PaymentController payment)
 	{
 		this.payment = payment;
 	}*/

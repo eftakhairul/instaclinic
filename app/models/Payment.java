@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.Constraint;
 
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import java.util.Date;
@@ -18,12 +19,14 @@ public class Payment extends Model
 	@Id
 	private int id;
 
+    @Constraints.Required
 	private String creditCardNo;
 
+    @Constraints.Required
+    private String fullName;
+
+    @Constraints.Required
     private double amount;
-	
-	//@OneToOne(mappedBy="payment")
-	//private Appointment appointment;
 
     private Date create_date;
 	
@@ -50,5 +53,21 @@ public class Payment extends Model
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Date getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(Date create_date) {
+        this.create_date = create_date;
     }
 }

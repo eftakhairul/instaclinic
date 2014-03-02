@@ -5,7 +5,7 @@
 
 
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
-@main("Checkout") {
+@main("") {
     <h1>Checkout</h1>
 
     @if(total == 0) {
@@ -15,26 +15,49 @@
         </div>
 
         } else {
+            @form(routes.PaymentController.processPayment) {
+            <div>
 
-            <table class="computers zebra-striped">
-                <thead>
+
+                <table class="computers zebra-striped">
+                    <thead>
+                        <tr>
+                            <td>
+                                Doctor Name
+                            </td>
+                            <td>
+                                Date And Time
+                            </td>
+                            <td>
+                                Action
+                            </td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    @for((key, appointment) <- appointmnets) {
                     <tr>
-                        <td>
-                        <td>
+                        <td><a href="#">1</a></td>
+                        <td>@appointment.getCreateDate().format("dd MMM yyyy")</td>
                     </tr>
-                </thead>
+                    }
+                    </tbody>
+                </table>
+             </div>
 
-                <tbody>
+            <fieldset>
+                <legend>Payment Process Information</legend>
+                @inputText(paymentForm("creditCardNo"), '_label -> "Credit Card No.")
+                @inputText(paymentForm("fullName"), '_label -> "Full Name")
+                @inputText(paymentForm("amount"), '_label -> "Total Amount")
+            </fieldset>
 
-                @for((key, appointment) <- appointmnets) {
-                <tr>
-                    <td><a href="#">1</a></td>
-                    <td>@appointment.getCreateDate().format("dd MMM yyyy")</td>
-                </tr>
-                }
-                </tbody>
-            </table>
-         </div>
+            <div class="actions">
+                <input type="submit" value="Checkout" class="btn primary"> or
+                <a href="@routes.Application.index()" class="btn">Cancel</a>
+            </div>
+            }
 
         }
 }

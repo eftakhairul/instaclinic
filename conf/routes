@@ -45,9 +45,10 @@ GET     /appointments/:id                 controllers.AppointmentController.edit
 POST    /appointments/:id                 controllers.AppointmentController.update(id:Long)
 # Delete an appointment
 
-POST    /appointments/:id/delete       controllers.AppointmentController.delete(id:Long)
-GET     /appointments/filter/:meetingType      controllers.AppointmentController.getFilteredSchedules(meetingType: String, doctorId:Int ?= 0)
+POST    /appointments/:id/delete            controllers.AppointmentController.delete(id:Long)
+GET     /appointments/filter/:meetingType   controllers.AppointmentController.getFilteredSchedules(meetingType: String, doctorId:Int ?= 0)
 
 #Checkout and Payment
-GET    /payment/checkout                  controllers.PaymentProcess.index()
+GET    /payment/checkout                    controllers.PaymentController.index()
+POST   /payment/processPayment              controllers.PaymentController.processPayment()
 
