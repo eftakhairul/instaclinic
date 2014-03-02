@@ -36,14 +36,12 @@
 }
 
 @main("Appointments List"){    
-    <h1 id="homeTitle">@Messages("schedules.list.title", currentPage.getTotalRowCount)</h1>
-
     <div id="actions">
         
-        <form action="@link(0, "id")" method="GET">
+        <!--<form action="@link(0, "id")" method="GET">
             <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by schedule name...">
             <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
-        </form>
+        </form> -->
         
         <a class="btn success" id="add" href="@routes.AppointmentController.create()">Add a new Appointment</a>
         
