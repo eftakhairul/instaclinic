@@ -1,0 +1,55 @@
+@(appointmnets: Map[String, Appointment], paymentForm: Form[Payment], total: Long)
+
+@import helper._
+@import models._
+
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+@main("Checkout") {
+    <h1>Checkout</h1>
+
+    @if(total == 0) {
+
+        <div class="well">
+            <em>Nothing to display</em>
+        </div>
+
+        } else {
+
+            <table class="computers zebra-striped">
+                <thead>
+                    <tr>
+                        <td>
+                        <td>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                @for((key, appointment) <- appointmnets) {
+                <tr>
+                    <td><a href="#">1</a></td>
+                    <td>@appointment.getCreateDate().format("dd MMM yyyy")</td>
+                </tr>
+                }
+                </tbody>
+            </table>
+         </div>
+
+        }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -48,5 +48,5 @@ POST    /appointments/:id/delete          controllers.AppointmentController.dele
 
 
 #Checkout and Payment
-GET    /checkout                          controllers.PaymentController.checkout()
+GET    /payment/checkout                  controllers.PaymentProcess.index()
 POST   /processPayment                    controllers.PaymentController.processPayment()
