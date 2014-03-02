@@ -20,3 +20,7 @@ dist
 #sql files
 1.sql
 /conf/evolutions/*
+
+
+#db setting
+/conf/application.conf

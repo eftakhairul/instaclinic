@@ -14,11 +14,16 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
 
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 @Entity
 public class Appointment extends Model 
 {
 	@Id
-	private int id;
+	private Long id;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@PrimaryKeyJoinColumn
@@ -37,21 +42,28 @@ public class Appointment extends Model
 	//@OneToOne
 	//@JoinColumn(name = "payment_id")
 	//private Payment payment;
+
+    private Date create_date;
+
+    public Appointment() {
+        this.create_date = new Date();
+    }
 	
 	public Appointment(Room room, Schedule schedule)
 	{
-		this.schedule = schedule;
-		this.room     = room;
+		this.schedule    = schedule;
+		this.room        = room;
+        this.create_date = new Date();
 	}
 	
-	public int getId()
+	public Long getId()
 	{
-		return id;
+		return this.id;
 	}
 	
 	public Room getRoom()
 	{
-		return room;
+		return this.room;
 	}
 	
 	public void setRoom(Room room)
@@ -61,7 +73,7 @@ public class Appointment extends Model
 	
 	public Schedule getSchedule()
 	{
-		return schedule;
+		return this.schedule;
 	}
 	
 	public void setSchedule(Schedule schedule)
@@ -104,9 +116,30 @@ public class Appointment extends Model
      * @param filter Filter applied on the name column
      */
     public static Page<Appointment> page(int page, int pageSize, String sortBy, String order, String filter) {
-        return 
-            find.where()
-                .findPagingList(pageSize)
-                .getPage(page);
+
+        return find.where()
+                   .findPagingList(pageSize)
+                   .getPage(page);
+    }
+
+    /**
+     * Return all user by a specific User Role
+     *
+     * @param id Filter by User id
+     * return Map<String,Appointment>
+     */
+    public static Map<String,Appointment> findByUserId(Long id) {
+
+        List<Appointment> appointments = find.where()
+                                             .eq("user", id)
+                                             .findList();
+
+        LinkedHashMap<String, Appointment> options = new LinkedHashMap<String, Appointment>();
+
+        for(Appointment appointment: appointments) {
+            options.put(appointment.getId().toString(), appointment);
+        }
+
+        return options;
     }
 }

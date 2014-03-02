@@ -13,9 +13,10 @@
             @inputText(loginForm("username"))
             @inputPassword(loginForm("password"))
         </fieldset>
+
         <div class="actions">
-            <input type="submit" value="Save" class="btn primary"> or
-            <a href="@routes.ScheduleController.list()" class="btn">Cancel</a>
+            <input type="submit" value="Save" class="btn primary"> OR
+            <a href="@routes.Application.index()" class="btn">Back</a>
         </div>
     }
 }
