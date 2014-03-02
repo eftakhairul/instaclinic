@@ -34,6 +34,12 @@ public class Application extends Controller {
             Ebean.save(newUser);
     	}
     	
+    	User newUser = new User();
+        newUser.setPassword("hello123");
+        newUser.setUsername("admin");
+        newUser.setUserRole(UserRole.ADMIN);
+        Ebean.save(newUser);
+    	
     	for(int i=1; i<5; i++)
     	{
     		Room room = new Room();
