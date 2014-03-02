@@ -3,7 +3,8 @@
 @import models._
 
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
-@main("Create Schedule"){      
+@main("Create Schedule"){
+	<script src="@routes.Assets.at("javascripts/schedule.js")" type="text/javascript"></script>      
     <p class="text-error">
  		@flash.get("error")
     </p>

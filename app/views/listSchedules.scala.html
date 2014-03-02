@@ -36,17 +36,11 @@
 }
 
 @main("Schedules List"){    
-    <div id="actions">
-        
-        <!--<form action="@link(0, "id")" method="GET">
-            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by schedule name...">
-            <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
-        </form> -->
-        
+    <div class="span12 clear">
         <a class="btn success" id="add" href="@routes.ScheduleController.create()">Add a new schedules</a>
-        
     </div>
-    
+    <br>
+    &nbsp;
     @if(currentPage.getTotalRowCount == 0) {
         
         <div class="well">
@@ -62,6 +56,7 @@
                     @header("date", "Date")
                     @header("startTime", "Start Time")
                     @header("endTime", "End Time")
+                    @header("type", "Schedule Type")
                 </tr>
             </thead>
             <tbody>
@@ -86,6 +81,7 @@
                                 @schedule.getEndTime().format("HH:mm:ss")
                             }
                         </td>
+                        <td>@schedule.getMeetingType().toString()</td>
                     </tr>
                 }
 
