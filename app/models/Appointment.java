@@ -14,6 +14,8 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
 
+import java.util.Date;
+
 @Entity
 public class Appointment extends Model 
 {
@@ -37,11 +39,18 @@ public class Appointment extends Model
 	//@OneToOne
 	//@JoinColumn(name = "payment_id")
 	//private Payment payment;
+
+    private Date create_date;
+
+    public Appointment() {
+        this.create_date = new Date();
+    }
 	
 	public Appointment(Room room, Schedule schedule)
 	{
-		this.schedule = schedule;
-		this.room     = room;
+		this.schedule    = schedule;
+		this.room        = room;
+        this.create_date = new Date();
 	}
 	
 	public int getId()

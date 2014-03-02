@@ -10,6 +10,8 @@ import javax.validation.Constraint;
 
 import play.db.ebean.Model;
 
+import java.util.Date;
+
 @Entity
 public class Payment extends Model 
 {
@@ -22,9 +24,11 @@ public class Payment extends Model
 	
 	//@OneToOne(mappedBy="payment")
 	//private Appointment appointment;
+
+    private Date create_date;
 	
 	public Payment() {
-		
+        this.create_date = new Date();
 	}
 	
 	public int getId()
