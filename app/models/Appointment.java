@@ -135,7 +135,7 @@ public class Appointment extends Model
     public static Map<String,Appointment> findByUserId(Long id) {
 
         List<Appointment> appointments = find.where()
-                                             .eq("user", id)
+                                             .eq("user_id", id)
                                              .findList();
 
         LinkedHashMap<String, Appointment> options = new LinkedHashMap<String, Appointment>();

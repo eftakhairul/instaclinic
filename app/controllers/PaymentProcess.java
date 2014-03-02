@@ -9,10 +9,9 @@ import java.util.Map;
 
 public class PaymentProcess extends Controller {
 
-    static Form<Payment> paymentForm              = form(Payment.class);
-    static Map<String, Appointment> appointments  = Appointment.findByUserId(Long.parseLong("1"));
-
     public static Result index() {
+        Form<Payment> paymentForm              = form(Payment.class);
+        Map<String, Appointment> appointments  = Appointment.findByUserId(Long.parseLong("1"));
         return ok(views.html.checkout.render(appointments, paymentForm, Long.parseLong("2")));
     }
 }
