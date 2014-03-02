@@ -93,7 +93,7 @@ public class User extends Model{
 
     /**
      * Return all user by a specific User Role
-     *
+     * @param role filter by user role
      * return LinkedHashMap options
      */
     public static Map<String,String> findByUserRole(UserRole role) {
