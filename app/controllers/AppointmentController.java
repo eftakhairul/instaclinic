@@ -37,9 +37,13 @@ public class AppointmentController extends Controller
    * @param filter Filter applied on computer names
    */
   public static Result list(int page, String sortBy, String order, String filter) {
+      User user = User.findById(Long.parseLong(session("user_is")));
+	  if(user == null || user.getUserRole() == UserRole.DOCTOR) {
+		  return redirect(routes.Authentication.login());
+	  }
       return ok(
           views.html.listAppointments.render(
-              Appointment.page(page, 10, sortBy, order, filter),
+              Appointment.page(user, page, 10, sortBy, order, filter),
               sortBy, order, filter
           )
       );

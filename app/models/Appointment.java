@@ -119,9 +119,10 @@ public class Appointment extends Model
      * @param order Sort order (either or asc or desc)
      * @param filter Filter applied on the name column
      */
-    public static Page<Appointment> page(int page, int pageSize, String sortBy, String order, String filter) {
+    public static Page<Appointment> page(User user, int page, int pageSize, String sortBy, String order, String filter) {
 
         return find.where()
+        		   .eq("user", user)
                    .findPagingList(pageSize)
                    .getPage(page);
     }

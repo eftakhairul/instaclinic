@@ -59,6 +59,7 @@
             <thead>
                 <tr>
                     @header("id", "schedule id")
+                    @header("date", "Date")
                     @header("startTime", "Start Time")
                     @header("endTime", "End Time")
                 </tr>
@@ -69,17 +70,20 @@
                     <tr>
                         <td><a href="@routes.ScheduleController.edit(schedule.getId())">@schedule.getId()</a></td>
                         <td>
+                        	@schedule.getStartTime().format("dd MMM yyyy")
+                        </td>
+                        <td>
                             @if(schedule.getStartTime() == null) {
                                 <em>-</em>
                             } else {
-                                @schedule.getStartTime().format("dd MMM yyyy")
+                                @schedule.getStartTime().format("HH:mm:ss")
                             }
                         </td>
                         <td>
                             @if(schedule.getEndTime() == null) {
                                 <em>-</em>
                             } else {
-                                @schedule.getEndTime().format("dd MMM yyyy")
+                                @schedule.getEndTime().format("HH:mm:ss")
                             }
                         </td>
                     </tr>

@@ -13,6 +13,7 @@ import play.mvc.*;
 import models.MeetingType;
 import models.Schedule;
 import models.User;
+import models.UserRole;
 import views.html.*;
 
 public class ScheduleController extends Controller 
@@ -26,11 +27,8 @@ public class ScheduleController extends Controller
     
   public static Result index() 
   {
-	Schedule temp = Ebean.find(Schedule.class, 1);
-	if(temp == null) {
-		temp = new Schedule(new Date(1000), new Date());
-	}
-	return ok();
+
+	return GO_HOME;
   }
   
   /**
@@ -42,9 +40,13 @@ public class ScheduleController extends Controller
    * @param filter Filter applied on computer names
    */
   public static Result list(int page, String sortBy, String order, String filter) {
-      return ok(
+	  User user = User.findById(Long.parseLong(session("user_is")));
+	  if(user == null || user.getUserRole() == UserRole.PATIENT) {
+		  return redirect(routes.Authentication.login());
+	  }
+	  return ok(
           views.html.listSchedules.render(
-              Schedule.page(page, 10, sortBy, order, filter),
+              Schedule.page(user, page, 10, sortBy, order, filter),
               sortBy, order, filter
           )
       );
@@ -102,6 +104,13 @@ public class ScheduleController extends Controller
       }
       
       Schedule schedule = scheduleForm.get();
+      
+      //Validations
+      if(schedule.getEndTime().getTime() <= schedule.getStartTime().getTime()) {
+    	  flash("error", "endTime cannot be previous time then start time");
+    	  return badRequest(views.html.createSchedule.render(scheduleForm));
+      }
+      
       long timeDiff = (schedule.getEndTime().getTime() - schedule.getStartTime().getTime())/60000;
       
       if(timeDiff == 20) {
@@ -114,6 +123,13 @@ public class ScheduleController extends Controller
     	  flash("error", "schedule must be 20 minutes or 60 minutes in length");
           return badRequest(views.html.createSchedule.render(scheduleForm));
       }
+      
+      if(schedule.getEndTime().getTime() < new Date().getTime() || schedule.getStartTime().getTime() < new Date().getTime()) {
+    	  flash("error", "Time cannot be in past time");
+    	  return badRequest(views.html.createSchedule.render(scheduleForm));
+      }
+      //validation ends
+      
       Long userid = Long.parseLong(session("user_is"));
       schedule.setUser(User.findById(userid));
       

@@ -111,9 +111,10 @@ public class Schedule extends Model
      * @param order Sort order (either or asc or desc)
      * @param filter Filter applied on the name column
      */
-    public static Page<Schedule> page(int page, int pageSize, String sortBy, String order, String filter) {
+    public static Page<Schedule> page(User user, int page, int pageSize, String sortBy, String order, String filter) {
         return 
             find.where()
+                .eq("user", user)
                 .findPagingList(pageSize)
                 .getPage(page);
     }
