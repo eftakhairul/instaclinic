@@ -7,22 +7,19 @@
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
 @main("Create Appointment"){      
     <h1>Add an Appointment</h1>
+    <script src="@routes.Assets.at("javascripts/appointment.js")" type="text/javascript"></script>
     @form(routes.AppointmentController.save()) {
         
         <fieldset>
              @select(appointmentForm("meetingType"), 
             	models.MeetingType.values.toList.map(v => (v.toString, Messages(v.toString()))), 
-            		'_label -> "Meeting Type")
-            @*
-            select(appointmentForm("user"), 
-            		options(("Doctor 1","Doctor 2")), 
-            		'_label -> "Select Doctor")*@
+            		'_label -> "Meeting Type")            
+            @select(appointmentForm("doctor"), 
+            		options(User.findByUserRole(UserRole.DOCTOR)), 
+            		'_label -> "Select Doctor")
             @select(appointmentForm("schedule"), 
             		options(Schedule.findByType(MeetingType.REGULAR)), 
             		'_label -> "Select Schedule")
-            @*
-            @inputText(appointmentForm("credit card"), 
-            		'_label -> "Enter Credit card number")*@ 				
             				
         </fieldset>
         

@@ -12,29 +12,35 @@ import views.html.*;
 
 public class Application extends Controller {
   
-  public static Result index() {
-	if(session().containsKey("user_is")) {
-		User user = User.findById(Long.parseLong(session().get("user_is")));
-		if(user != null) {
-			return ok(index.render("Hello "+user.getUsername()));
+	  public static Result index() 
+	  {
+		if(session().containsKey("user_is")) {
+			User user = User.findById(Long.parseLong(session().get("user_is")));
+			if(user != null) {
+				return ok(index.render("Hello "+user.getUsername()));
+			}
 		}
-	}
-    return ok(index.render("Your new application is ready."));
-  }
+	    return ok(index.render("Your new application is ready."));
+	  }
 
 
-    public static Result testData(){
-
-        User newUser = new User();
-        newUser.setPassword(Crypto.sign("hello123"));
-        newUser.setUsername("roman");
-        newUser.setUserRole(UserRole.DOCTOR);
-        Ebean.save(newUser);
-
-        Room room = new Room();
-        Ebean.save(room);
-
-        return ok("Data is saved");
+    public static Result testData()
+    {
+    	for(int i=3; i <= 7; i++)
+    	{
+    		User newUser = new User();
+            newUser.setPassword("hello123");
+            newUser.setUsername("doctor"+i);
+            newUser.setUserRole(UserRole.DOCTOR);
+            Ebean.save(newUser);
+    	}
+    	
+    	for(int i=1; i<5; i++)
+    	{
+    		Room room = new Room();
+    	    Ebean.save(room);
+    	}
+        
+    	return ok("Data is saved");
     }
-
 }

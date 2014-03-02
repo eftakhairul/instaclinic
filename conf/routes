@@ -45,3 +45,4 @@ GET     /appointments/:id              controllers.AppointmentController.edit(id
 POST    /appointments/:id              controllers.AppointmentController.update(id:Long)
 # Delete an appointment
 POST    /appointments/:id/delete       controllers.AppointmentController.delete(id:Long)
+GET     /appointments/filter/:meetingType      controllers.AppointmentController.getFilteredSchedules(meetingType: String, doctorId:Int ?= 0)

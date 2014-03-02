@@ -114,9 +114,10 @@ public class ScheduleController extends Controller
     	  flash("error", "schedule must be 20 minutes or 60 minutes in length");
           return badRequest(views.html.createSchedule.render(scheduleForm));
       }
+      Long userid = Long.parseLong(session("user_is"));
+      schedule.setUser(User.findById(userid));
       
-      
-      scheduleForm.get().save();
+      schedule.save();
       
       flash("success", "Computer " + scheduleForm.get().getId() + " has been created");
       return GO_HOME;
