@@ -27,7 +27,7 @@ public class PaymentController extends Controller {
         Form<Payment> filledForm               = paymentForm.bindFromRequest();
 
         // Check amount zero or less
-        if(!filledForm.field("amount").valueOr("").isEmpty() || filledForm.get().getAmount() < 1) {
+        if(filledForm.field("amount").valueOr("").isEmpty() || filledForm.get().getAmount() < 1) {
                 filledForm.reject("amount", "Please insert proper amount");
         }
 
