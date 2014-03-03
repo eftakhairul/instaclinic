@@ -41,8 +41,8 @@ public class ScheduleController extends Controller
    */
   public static Result list(int page, String sortBy, String order, String filter) {
 	  User user = null;
-	  if(session().containsKey("user_is")) {
-		  user = User.findById(Long.parseLong(session("user_is")));
+	  if(session().containsKey("user_id")) {
+		  user = User.findById(Long.parseLong(session("user_id")));
 	  }
 	  
 	  if(user == null || user.getUserRole() == UserRole.PATIENT) {
@@ -125,7 +125,7 @@ public class ScheduleController extends Controller
       }
       //validation ends
       
-      Long userid = Long.parseLong(session("user_is"));
+      Long userid = Long.parseLong(session("user_id"));
       schedule.setUser(User.findById(userid));
       
       schedule.save();

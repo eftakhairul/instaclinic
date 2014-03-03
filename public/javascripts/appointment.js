@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("#doctor").parent().parent().hide();
+	setDoctorVisibility($("#meetingType").val());
 	$("#meetingType").change(function(){
 		filterByMeeting($(this).val());
 	});
@@ -10,13 +10,21 @@ $(document).ready(function(){
 
 function filterByMeeting(meetingType) {
 	
-	if(meetingType == "YEARLY") {
-		$("#doctor").parent().parent().show();
-	}
+	setDoctorVisibility(meetingType);
 	
 	$.get("filter/"+meetingType, function(data){
 		showSchedules(data);
 	});
+}
+
+function setDoctorVisibility(meetingType)
+{
+	if(meetingType == "YEARLY") {
+		$("#doctor").parent().parent().show();
+	}
+	else {
+		$("#doctor").parent().parent().hide();
+	}
 }
 
 function filterByDoctor(doctorId) {
