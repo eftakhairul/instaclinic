@@ -2,6 +2,7 @@ package controllers;
 
 
 import com.avaje.ebean.Ebean;
+import models.Patient;
 import models.User;
 import models.UserRole;
 import models.HealthCard;
@@ -80,6 +81,20 @@ public class Registration extends Controller {
             newUser.setPassword(newUser.getPassword());
             newUser.setUserRole(UserRole.PATIENT);
             Ebean.save(newUser);
+
+            try {
+                Patient patient = new Patient();
+                patient.setUser(newUser);
+                patient.setBirthday(nonModelFormData.get("birthday"));
+                patient.setHealth_card_no(HealthCardNumber);
+                patient.setPhone_number(nonModelFormData.get("phone_number"));
+                patient.setGender(nonModelFormData.get("gender"));
+                patient.save();
+            } catch (Exception e) {
+                flash("error", "Some data is not save properly");
+            }
+
+            flash("success", "Registration is successful.");
             return redirect(routes.Authentication.login());
         }
     }
