@@ -195,4 +195,16 @@ public class Appointment extends Model
 		}
     	return returnList;
     }
+    
+    public static boolean findBySchedule(Schedule schedule)
+    {
+    	List<Appointment> appointments = find.all();
+    	for (Appointment appointment : appointments) {
+    		Schedule schedule2 = appointment.getSchedule();
+    		if(schedule.getId() == schedule2.getId()) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 }

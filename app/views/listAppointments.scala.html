@@ -33,19 +33,27 @@
                     @header("create_date", "create date")
                     @header("schedule_date", "Schedule Date")
                     @header("schedule_type", "Schedule Type")
+                    @header("is_paid", "Payment Status")
                 </tr>
             </thead>
             <tbody>
 
                 @for(appointment <- currentPage.getList) {
                     <tr>
-                        <td><a href="@routes.AppointmentController.edit(appointment.getId())">@appointment.getId()</a></td>
+                        <td>
+                        @if(appointment.getPayment() != null){
+                        	@appointment.getId()
+                        }else {
+                        	<a href="@routes.AppointmentController.edit(appointment.getId())">@appointment.getId()</a>
+                        }
+                        </td>
                         <td>@appointment.getCreateDate().format("MM/dd/yyyy HH:mm")</td>
                         <td>
                         @appointment.getSchedule().getStartTime().format("MM/dd/yyyy HH:mm") -
                         @appointment.getSchedule().getEndTime().format("MM/dd/yyyy HH:mm")
                         </td>
                         <td>@appointment.getSchedule().getMeetingType()</td>
+                        <td>@if(appointment.getPayment() != null){Paid}else{Not paid}</td>
                     </tr>
                 }
 

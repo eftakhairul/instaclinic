@@ -57,7 +57,7 @@ public class Registration extends Controller {
             return badRequest(views.html.registration.render(filledForm));
         } else {
             User newUser = filledForm.get();
-            newUser.setPassword(Crypto.sign(newUser.getPassword()));
+            newUser.setPassword(newUser.getPassword());
             newUser.setUserRole(UserRole.PATIENT);
             Ebean.save(newUser);
             return redirect(routes.Authentication.login());

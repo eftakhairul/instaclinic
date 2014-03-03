@@ -1,5 +1,6 @@
 package models;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -130,11 +131,13 @@ public class Schedule extends Model
     
     public static Map<String,String> findByType(MeetingType type) {
     	List<Schedule> schedules = find.where()
-        		.eq("meetingType", type)
+        		.eq("meetingType", type).orderBy("startTime")
         		.findList();
     	LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
         for(Schedule c: schedules) {
-            options.put(c.toString(), c.startTime.toString() + " To " +c.endTime.toString());
+        	if(!Appointment.findBySchedule(c)) {
+        		options.put(c.toString(), new SimpleDateFormat("MM/dd/yy HH:mm").format(c.startTime) + " To " +new SimpleDateFormat("MM/dd/yy HH:mm").format(c.endTime));
+        	}
         }
         return options;
     }
@@ -145,7 +148,9 @@ public class Schedule extends Model
         		.findList();
     	LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
         for(Schedule c: schedules) {
-            options.put(c.toString(), c.startTime.toString() + " To " +c.endTime.toString());
+        	if(!Appointment.findBySchedule(c)) {
+        		options.put(c.toString(), new SimpleDateFormat("MM/dd/yy HH:mm").format(c.startTime) + " To " +new SimpleDateFormat("MM/dd/yy HH:mm").format(c.endTime));
+        	}
         }
         return options;
     }
@@ -156,7 +161,9 @@ public class Schedule extends Model
         		.findList();
     	LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
         for(Schedule c: schedules) {
-            options.put(c.toString(), c.startTime.toString() + " To " +c.endTime.toString());
+        	if(!Appointment.findBySchedule(c)) {
+        		options.put(c.toString(), new SimpleDateFormat("MM/dd/yy HH:mm").format(c.startTime) + " To " +new SimpleDateFormat("MM/dd/yy HH:mm").format(c.endTime));
+        	}
         }
         return options;
     }

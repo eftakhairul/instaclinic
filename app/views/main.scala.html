@@ -14,17 +14,40 @@
         <script src="@routes.Assets.at("javascripts/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
     </head>
     <body>
+@import helper._
+@import models._    
     	<div class="container">
+    		<div class="span12">
+    		@if(session().contains("user_id")){
+    		
+    		}
+    		</div>
 	    	<div class="span12">
 	    		<div class="navbar">          
 				    <div class="navbar-inner">
 				        <ul class="nav">
 				            <li><a href="@routes.Application.index()" title="InstaClinic Home">Home</a></li>
-				            <li><a href="@routes.ScheduleController.list()" title="Schedules">Schedules</a></li>
-				            <li><a href="@routes.AppointmentController.list()" title="Appointments">Appointments</a></li>
+				            @if(!session().contains("user_id")){
 				            <li><a href="@routes.Authentication.login()" title="Login">Login</a></li>
 				            <li><a href="@routes.Registration.index()" title="Login">Registration</a></li>
 				            <li><a href="@routes.PaymentController.index()" title="Checkout">Cart</a></li>
+
+				            }else{
+				            
+					            @if(session().get("role") == "PATIENT") {
+					            	<li><a href="@routes.AppointmentController.list()" title="Appointments">Appointments</a></li>
+					            	<li><a href="@routes.PaymentController.index()" title="Checkout">Checkout</a></li>
+					            }
+					            @if(session().get("role") == "DOCTOR") {
+					            	<li><a href="@routes.ScheduleController.list()" title="Schedules">Schedules</a></li>
+					            }
+					            @if(session().get("role") == "ADMIN") {
+					            	<li><a href="@routes.UserController.patientList()" title="Checkout">Patient List</a></li>
+					            }
+					            <li><a href="@routes.Authentication.logout()" title="Logout">Logout</a></li>
+				            }
+				            
+>>>>>>> f66f9a8f6155dd657ecc690d1167acd99829f0bc
 				        </ul>
 				    </div>
 				</div>
