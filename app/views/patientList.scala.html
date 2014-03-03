@@ -1,0 +1,62 @@
+@(patients: Map[String, String], total: Long)
+
+@import helper._
+@import models._
+
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+@main("") {
+    <h1>Patient List</h1>
+
+    @if(total == 0) {
+
+        <div class="well">
+            <em>No patient available in the system.</em>
+        </div>
+        } else {
+
+            <div>
+                <table class="computers zebra-striped">
+                    <thead>
+                        <tr>
+                            <td>
+                                User ID
+                            </td>
+                            <td>
+                                User Name
+                            </td>
+                            <td>
+                                Action
+                            </td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    @for((id, username) <- patients) {
+                    <tr>
+                        <td><a href="#">@id</a></td>
+                        <td>@username </td>
+                        <td><a class="btn btn-success" href="@routes.UserController.workAsPatient(id)"> Work As Nurse </a></td>
+                    </tr>
+                    }
+                    </tbody>
+                </table>
+             </div>
+        }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
