@@ -37,7 +37,10 @@ public class AppointmentController extends Controller
    * @param filter Filter applied on computer names
    */
   public static Result list(int page, String sortBy, String order, String filter) {
-      User user = User.findById(Long.parseLong(session("user_is")));
+	  User user = null;
+	  if(session().containsKey("user_id")) {
+		  user = User.findById(Long.parseLong(session("user_id")));
+	  }
 	  if(user == null || user.getUserRole() == UserRole.DOCTOR) {
 		  return redirect(routes.Authentication.login());
 	  }
