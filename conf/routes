@@ -49,7 +49,7 @@ GET    /appointments/:id/delete            controllers.AppointmentController.del
 GET     /appointments/filter/:meetingType  controllers.AppointmentController.getFilteredSchedules(meetingType: String, doctorId:Int ?= 0)
 
 #Checkout and Payment
-GET    /                                   controllers.PaymentController.index()
+GET    /cart                               controllers.PaymentController.index()
 POST   /payment/processPayment             controllers.PaymentController.processPayment()
 
 

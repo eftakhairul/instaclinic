@@ -30,19 +30,18 @@
 				            @if(!session().contains("user_id")){
 				            <li><a href="@routes.Authentication.login()" title="Login">Login</a></li>
 				            <li><a href="@routes.Registration.index()" title="Login">Registration</a></li>
-				            <li><a href="@routes.PaymentController.index()" title="Checkout">Cart</a></li>
 
 				            }else{
-				            
 					            @if(session().get("role") == "PATIENT") {
 					            	<li><a href="@routes.AppointmentController.list()" title="Appointments">Appointments</a></li>
-					            	<li><a href="@routes.PaymentController.index()" title="Checkout">Checkout</a></li>
+                                    <li><a href="@routes.PaymentController.index()" title="Checkout">Cart</a></li>
 					            }
 					            @if(session().get("role") == "DOCTOR") {
 					            	<li><a href="@routes.ScheduleController.list()" title="Schedules">Schedules</a></li>
 					            }
 					            @if(session().get("role") == "ADMIN") {
 					            	<li><a href="@routes.UserController.patientList()" title="Checkout">Patient List</a></li>
+                                    <li><a href="@routes.UserController.doctorList()" title="Checkout">Doctor List</a></li>
 					            }
 					            <li><a href="@routes.Authentication.logout()" title="Logout">Logout</a></li>
 				            }

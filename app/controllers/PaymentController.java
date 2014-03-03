@@ -18,7 +18,7 @@ public class PaymentController extends Controller {
         Map<String, Appointment> appointments  = Appointment.findByUserId(Long.parseLong(session("user_id")));
         String tolal                           = "" + Appointment.findCountByUserId(Long.parseLong(session("user_id")));
 
-        return ok(views.html.checkout.render(appointments, paymentForm, Long.parseLong(tolal)));
+        return ok(views.html.cart.render(appointments, paymentForm, Long.parseLong(tolal)));
     }
 
     public static Result processPayment() {
@@ -33,7 +33,7 @@ public class PaymentController extends Controller {
 
         if(filledForm.hasErrors()) {
 
-            return badRequest(views.html.checkout.render(appointments, filledForm, Long.parseLong(tolal)));
+            return badRequest(views.html.cart.render(appointments, filledForm, Long.parseLong(tolal)));
         } else {
             //Inset payment
             Payment newPayment = filledForm.get();
@@ -47,6 +47,7 @@ public class PaymentController extends Controller {
                 appointment.update();
             }
 
+            flash("success", "Payment is done successfully.");
             return redirect(routes.Application.index());
         }
     }
