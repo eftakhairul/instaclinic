@@ -41,7 +41,7 @@ public class Authentication extends Controller {
 
             if (currentUser != null) {
                 session().clear();
-                session("user_is", currentUser.getId().toString());
+                session("user_id", currentUser.getId().toString());
                 return redirect(routes.Application.index());
             } else {
                 filledForm.reject("password", "Password doesn't match, Please try again.");

@@ -15,19 +15,19 @@ public class PaymentController extends Controller {
 
     public static Result index() {
 
-        Map<String, Appointment> appointments  = Appointment.findByUserId(Long.parseLong("1"));
-        String tolal                           = "" + Appointment.findCountByUserId(Long.parseLong("1"));
+        Map<String, Appointment> appointments  = Appointment.findByUserId(Long.parseLong(session("user_id")));
+        String tolal                           = "" + Appointment.findCountByUserId(Long.parseLong(session("user_id")));
 
         return ok(views.html.checkout.render(appointments, paymentForm, Long.parseLong(tolal)));
     }
 
     public static Result processPayment() {
-        Map<String, Appointment> appointments  = Appointment.findByUserId(Long.parseLong("1"));
-        String tolal                           = "" + Appointment.findCountByUserId(Long.parseLong("1"));
+        Map<String, Appointment> appointments  = Appointment.findByUserId(Long.parseLong(session("user_id")));
+        String tolal                           = "" + Appointment.findCountByUserId(Long.parseLong(session("user_id")));
         Form<Payment> filledForm               = paymentForm.bindFromRequest();
 
         // Check amount zero or less
-        if(!filledForm.field("amount").valueOr("").isEmpty() || filledForm.get().getAmount() < 1) {
+        if(filledForm.field("amount").valueOr("").isEmpty() || filledForm.get().getAmount() < 1) {
                 filledForm.reject("amount", "Please insert proper amount");
         }
 
