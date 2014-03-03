@@ -25,7 +25,7 @@ public class Application extends Controller {
 
     public static Result testData()
     {
-    	for(int i=3; i <= 7; i++)
+    	for(int i=1; i <= 7; i++)
     	{
     		User newUser = new User();
             newUser.setPassword("hello123");

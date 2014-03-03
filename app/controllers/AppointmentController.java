@@ -73,21 +73,23 @@ public class AppointmentController extends Controller
    * @param id Id of the computer to edit
    */
   public static Result update(Long id) {
-      //Form<Appointment> appointmentForm = form(Appointment.class).bindFromRequest();
-      
+  
       Form<Appointment> appointmentForm = form(Appointment.class).bindFromRequest();
       int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
       Schedule schedule = Schedule.findById(scheduleId);
       
       Appointment appointment = Appointment.find.byId(id);
       appointment.setSchedule(schedule);
+      
+      Room room = Appointment.findAvailableRoom(schedule);
+      if(room == null) {
+    	  flash("error", "No Room available on this schedule");
+    	  return badRequest(views.html.createAppointment.render(appointmentForm));
+      }
+      appointment.setRoom(room);
+      
       appointment.update();
       
-      /*if(appointmentForm.hasErrors()) {
-    	  //computerForm.errors()[0].
-          return badRequest(views.html.editAppointment.render(id, appointmentForm, Appointment.find.byId(id)));
-      }*/
-      //appointmentForm.get().update(id);
       flash("success", "Appointment has been updated");
       return GO_HOME;
   }
@@ -110,14 +112,22 @@ public class AppointmentController extends Controller
       int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
       Schedule schedule = Schedule.findById(scheduleId);
       
+      
       Appointment appointment = new Appointment(new Room(), schedule);
       
       //TODO check room availability
-      Room room = Room.getDemo();
+      Room room = Appointment.findAvailableRoom(schedule);
+      if(room == null) {
+    	  flash("error", "No Room available on this schedule");
+    	  return badRequest(views.html.createAppointment.render(appointmentForm));
+      }
       appointment.setRoom(room);
       System.out.println("room : "+room.getId());
       
-      User user = User.findById(Long.parseLong(session().get("user_is")));
+      User user = User.findById(Long.parseLong(session().get("user_id")));
+      
+      
+      
       appointment.setUser(user);
       //System.out.println("User : "+user.getUsername());
       
@@ -132,7 +142,7 @@ public class AppointmentController extends Controller
       }
       appointmentForm.get().save();*/
       
-      flash("success", "Computer " + appointment.getId() + " has been created");
+      flash("success", "Appointment has been created successfully");
       return GO_HOME;
   }
   
