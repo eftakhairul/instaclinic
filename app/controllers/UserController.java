@@ -20,7 +20,13 @@ public class UserController extends Controller {
     }
 
     public static Result workAsPatient(String id) {
+        //Clear session
+        session().clear();
+
         session("user_id", id);
+        User user = User.find.ref(Long.parseLong(id));
+        session("role", user.getUserRole().name());
+
         return redirect(routes.Application.index());
     }
 }
