@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.StringWriter;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.avaje.ebean.Ebean;
@@ -73,21 +74,33 @@ public class AppointmentController extends Controller
    * @param id Id of the computer to edit
    */
   public static Result update(Long id) {
-      //Form<Appointment> appointmentForm = form(Appointment.class).bindFromRequest();
-      
+  
       Form<Appointment> appointmentForm = form(Appointment.class).bindFromRequest();
       int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
       Schedule schedule = Schedule.findById(scheduleId);
       
       Appointment appointment = Appointment.find.byId(id);
       appointment.setSchedule(schedule);
+      
+      Room room = Appointment.findAvailableRoom(schedule);
+      if(room == null) {
+    	  flash("error", "No Room available on this schedule");
+    	  return badRequest(views.html.createAppointment.render(appointmentForm));
+      }
+      appointment.setRoom(room);
+      
+      User user = User.findById(Long.parseLong(session().get("user_id")));
+      List<Appointment> appointments = Appointment.findByTime(schedule.getStartTime(), schedule.getEndTime());
+      
+      for (Appointment appointment2 : appointments) {
+		if(appointment2.getUser().getId() == user.getId()) {
+			flash("error", "You have another appointment overlapped with this schedule");
+	    	return badRequest(views.html.createAppointment.render(appointmentForm));
+		}
+      }
+      
       appointment.update();
       
-      /*if(appointmentForm.hasErrors()) {
-    	  //computerForm.errors()[0].
-          return badRequest(views.html.editAppointment.render(id, appointmentForm, Appointment.find.byId(id)));
-      }*/
-      //appointmentForm.get().update(id);
       flash("success", "Appointment has been updated");
       return GO_HOME;
   }
@@ -110,14 +123,29 @@ public class AppointmentController extends Controller
       int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
       Schedule schedule = Schedule.findById(scheduleId);
       
+      
       Appointment appointment = new Appointment(new Room(), schedule);
       
       //TODO check room availability
-      Room room = Room.getDemo();
+      Room room = Appointment.findAvailableRoom(schedule);
+      if(room == null) {
+    	  flash("error", "No Room available on this schedule");
+    	  return badRequest(views.html.createAppointment.render(appointmentForm));
+      }
       appointment.setRoom(room);
-      System.out.println("room : "+room.getId());
+      //System.out.println("room : "+room.getId());
       
-      User user = User.findById(Long.parseLong(session().get("user_is")));
+      User user = User.findById(Long.parseLong(session().get("user_id")));
+      
+      List<Appointment> appointments = Appointment.findByTime(schedule.getStartTime(), schedule.getEndTime());
+      System.out.println("appointments foound: "+appointments.size()+" "+schedule.getStartTime());
+      for (Appointment appointment2 : appointments) {
+		if(appointment2.getUser().getId() == user.getId()) {
+			flash("error", "You have another appointment overlapped with this schedule");
+	    	return badRequest(views.html.createAppointment.render(appointmentForm));
+		}
+      }
+      
       appointment.setUser(user);
       //System.out.println("User : "+user.getUsername());
       
@@ -132,7 +160,7 @@ public class AppointmentController extends Controller
       }
       appointmentForm.get().save();*/
       
-      flash("success", "Computer " + appointment.getId() + " has been created");
+      flash("success", "Appointment has been created successfully");
       return GO_HOME;
   }
   

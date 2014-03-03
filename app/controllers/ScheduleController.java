@@ -90,7 +90,7 @@ public class ScheduleController extends Controller
     	  schedule.setId(Integer.parseInt(id.toString()));
     	  schedule.update();
     	  
-    	  flash("success", "Computer " + schedule.getId() + " has been updated");
+    	  flash("success", "Schedule has been updated");
     	  return GO_HOME;
       }
       flash("error", "Couldn't save this schedule. Please try later");
@@ -130,7 +130,7 @@ public class ScheduleController extends Controller
       
       schedule.save();
       
-      flash("success", "Computer " + scheduleForm.get().getId() + " has been created");
+      flash("success", "Schedule has been created");
       return GO_HOME;
   }
   
@@ -139,7 +139,7 @@ public class ScheduleController extends Controller
    */
   public static Result delete(Long id) {
 	  Schedule.find.ref(id).delete();
-      flash("success", "Computer has been deleted");
+      flash("success", "Schedule has been deleted");
       return GO_HOME;
   }
   

@@ -171,4 +171,19 @@ public class Schedule extends Model
     	schedules.add(new Schedule(new Date(), new Date()));
     	return schedules;
     }
+    
+    public static List<Schedule> findByTime(Date start, Date end)
+    {
+    	ArrayList<Schedule> returnList = new ArrayList<Schedule>();
+    	List<Schedule> schedules = find.all();
+    	for (Schedule schedule : schedules) {
+			if(schedule.getStartTime().getTime() > start.getTime() || schedule.getStartTime().getTime() < end.getTime()) {
+				returnList.add(schedule);
+			}
+			else if(schedule.getEndTime().getTime() > start.getTime() || schedule.getEndTime().getTime() < end.getTime()) {
+				returnList.add(schedule);
+			}
+		}
+    	return returnList;
+    }
 }

@@ -14,6 +14,7 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,9 +26,9 @@ public class Appointment extends Model
 	@Id
 	private Long id;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL)
 	@PrimaryKeyJoinColumn
-	//@Constraints.Required
+	@Constraints.Required
 	private Schedule schedule;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
@@ -152,5 +153,46 @@ public class Appointment extends Model
     public static int findCountByUserId(Long id) {
 
         return find.where().eq("user_id", id).isNull("payment_id").findRowCount();
+    }
+    
+    public static Room findAvailableRoom(Schedule schedule)
+    {
+    	List<Room> rooms = Room.getAllRooms();
+    	List<Appointment> appointments = findByTime(schedule.getStartTime(), schedule.getEndTime());
+    	
+    	for (Room room : rooms) {
+			if(isRoomAvailable(room, appointments)) {
+				return room;
+			}
+		}
+    	return null;
+    }
+    
+    public static boolean isRoomAvailable(Room room, List<Appointment> appointments)
+    {
+    	for (Appointment appointment : appointments) {
+			if(appointment.getRoom() == room) {
+				return false;
+			}
+		}
+    	return true;
+    }
+    
+    public static List<Appointment> findByTime(Date start, Date end)
+    {
+    	ArrayList<Appointment> returnList = new ArrayList<Appointment>();
+    	List<Appointment> appointments = find.all();
+    	for (Appointment appointment : appointments) {
+			Schedule schedule = appointment.getSchedule();
+    		if(schedule.getStartTime().getTime() >= start.getTime() && schedule.getStartTime().getTime() < end.getTime()) {
+				//System.out.println("inside start matching "+schedule.getStartTime().getTime() + " "+start.getTime());
+    			returnList.add(appointment);
+			}
+			else if(schedule.getEndTime().getTime() > start.getTime() && schedule.getEndTime().getTime() <= end.getTime()) {
+				//System.out.println("inside end matching");
+				returnList.add(appointment);
+			}
+		}
+    	return returnList;
     }
 }
