@@ -188,6 +188,7 @@ public class ScheduleController extends Controller
     	  for (Schedule schedule2 : schedules) {
 			if(schedule2.getUser().getId() == user.getId()) {
 				flash("error", "You have another schedule in that time frame ");
+				return false;
 			}
     	  }
       }

@@ -46,7 +46,6 @@
 					            }
 					            <li><a href="@routes.Authentication.logout()" title="Logout">Logout</a></li>
 				            }
-				            
 				        </ul>
 				    </div>
 				</div>
@@ -54,12 +53,12 @@
 	    	<div class="span12">
 	    		<h1>@title</h1>
     			@if(flash.get("error")) {
-    			<div class="alert-message error">
+    			<div class="span12 alert-message block-message error">
     			@flash.get("error")
     			</div>
     			}
     			@if(flash.get("success")) {
-	    		<div class="alert-message success">
+	    		<div class="span12 alert-message block-message success">
 			 		@flash.get("success")
 			    </div>
 			    }
