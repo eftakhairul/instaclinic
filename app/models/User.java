@@ -109,4 +109,13 @@ public class User extends Model{
 
         return options;
     }
+
+    /**
+     * Return the count by a specific User Role
+     * @param role filter by user role
+     * return LinkedHashMap options
+     */
+    public static int findCountByUserRole(UserRole role) {
+        return find.where().eq("userRole", role).findRowCount();
+    }
 }

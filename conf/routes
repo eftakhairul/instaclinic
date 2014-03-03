@@ -3,13 +3,13 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /                                  controllers.Application.index()
 
 # Home page
-GET     /create-dummy-data          controllers.Application.testData()
+GET     /create-dummy-data                 controllers.Application.testData()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                      controllers.Assets.at(path="/public", file)
 
 
 #Authenticaton
@@ -46,9 +46,14 @@ POST    /appointments/:id                 controllers.AppointmentController.upda
 # Delete an appointment
 
 GET    /appointments/:id/delete            controllers.AppointmentController.delete(id:Long)
-GET     /appointments/filter/:meetingType   controllers.AppointmentController.getFilteredSchedules(meetingType: String, doctorId:Int ?= 0)
+GET     /appointments/filter/:meetingType  controllers.AppointmentController.getFilteredSchedules(meetingType: String, doctorId:Int ?= 0)
 
 #Checkout and Payment
-GET    /payment/checkout                    controllers.PaymentController.index()
-POST   /payment/processPayment              controllers.PaymentController.processPayment()
+GET    /payment/checkout                   controllers.PaymentController.index()
+POST   /payment/processPayment             controllers.PaymentController.processPayment()
+
+
+#User Management
+GET   /patient                             controllers.UserController.patientList()
+GET   /patient/:id/workAsNurse             controllers.UserController.workAsPatient(id:String)
 
