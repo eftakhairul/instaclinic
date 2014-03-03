@@ -1,11 +1,6 @@
 package models;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 import javax.validation.Constraint;
 
 import play.data.validation.Constraints;
@@ -17,6 +12,7 @@ import java.util.Date;
 public class Payment extends Model 
 {
 	@Id
+    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
 
     @Constraints.Required

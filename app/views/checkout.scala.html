@@ -40,7 +40,7 @@
                     <tr>
                         <td><a href="#">@appointment.getRoom().getId()</a></td>
                         <td>@appointment.getSchedule().getStartTime().format("dd MMM yyyy hh mm") - @appointment.getSchedule().getEndTime().format("dd MMM yyyy hh mm") </td>
-                        <td><input type="hidden" name="appointment_id[]" value="@appointment.getId()" /> <a class="btn btn-danger" href="@routes.AppointmentController.delete(appointment.getRoom().getId())"> Delete </a></td>
+                        <td><input type="hidden" name="appointment_id" value="@appointment.getId()" /> <a class="btn btn-danger" href="@routes.AppointmentController.delete(appointment.getRoom().getId())"> Delete </a></td>
                     </tr>
                     }
                     </tbody>

@@ -39,9 +39,9 @@ public class Appointment extends Model
 	@PrimaryKeyJoinColumn
 	private User user;
 	
-	//@OneToOne
-	//@JoinColumn(name = "payment_id")
-	//private PaymentController payment;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "payment_id")
+	private Payment payment;
 
     private Date create_date;
 
@@ -95,15 +95,15 @@ public class Appointment extends Model
         return this.create_date;
     }
 	
-	/*public PaymentController getPayment()
+	public Payment getPayment()
 	{
 		return this.payment;
 	}
-	
-	public void setPayment(PaymentController payment)
+
+	public void setPayment(Payment payment)
 	{
 		this.payment = payment;
-	}*/
+	}
 	
 	/**
      * Generic query helper for entity Schedule with id Long
@@ -137,6 +137,7 @@ public class Appointment extends Model
 
         List<Appointment> appointments = find.where()
                                              .eq("user_id", id)
+                                             .isNull("payment_id")
                                              .findList();
 
         LinkedHashMap<String, Appointment> options = new LinkedHashMap<String, Appointment>();
@@ -150,6 +151,6 @@ public class Appointment extends Model
 
     public static int findCountByUserId(Long id) {
 
-        return find.where().eq("user_id", id).findRowCount();
+        return find.where().eq("user_id", id).isNull("payment_id").findRowCount();
     }
 }

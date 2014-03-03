@@ -35,8 +35,18 @@ public class PaymentController extends Controller {
 
             return badRequest(views.html.checkout.render(appointments, filledForm, Long.parseLong(tolal)));
         } else {
+            //Inset payment
             Payment newPayment = filledForm.get();
             Ebean.save(newPayment);
+
+            //Update appointment table with corresponding payment id
+            final Map<String, String[]> values = request().body().asFormUrlEncoded();
+            for (String appointment_id: values.get("appointment_id")) {
+                Appointment appointment = Appointment.find.ref(Long.parseLong(appointment_id));
+                appointment.setPayment(newPayment);
+                appointment.update();
+            }
+
             return redirect(routes.Application.index());
         }
     }
