@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.StringWriter;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.avaje.ebean.Ebean;
@@ -88,6 +89,16 @@ public class AppointmentController extends Controller
       }
       appointment.setRoom(room);
       
+      User user = User.findById(Long.parseLong(session().get("user_id")));
+      List<Appointment> appointments = Appointment.findByTime(schedule.getStartTime(), schedule.getEndTime());
+      
+      for (Appointment appointment2 : appointments) {
+		if(appointment2.getUser().getId() == user.getId()) {
+			flash("error", "You have another appointment overlapped with this schedule");
+	    	return badRequest(views.html.createAppointment.render(appointmentForm));
+		}
+      }
+      
       appointment.update();
       
       flash("success", "Appointment has been updated");
@@ -122,11 +133,18 @@ public class AppointmentController extends Controller
     	  return badRequest(views.html.createAppointment.render(appointmentForm));
       }
       appointment.setRoom(room);
-      System.out.println("room : "+room.getId());
+      //System.out.println("room : "+room.getId());
       
       User user = User.findById(Long.parseLong(session().get("user_id")));
       
-      
+      List<Appointment> appointments = Appointment.findByTime(schedule.getStartTime(), schedule.getEndTime());
+      System.out.println("appointments foound: "+appointments.size()+" "+schedule.getStartTime());
+      for (Appointment appointment2 : appointments) {
+		if(appointment2.getUser().getId() == user.getId()) {
+			flash("error", "You have another appointment overlapped with this schedule");
+	    	return badRequest(views.html.createAppointment.render(appointmentForm));
+		}
+      }
       
       appointment.setUser(user);
       //System.out.println("User : "+user.getUsername());

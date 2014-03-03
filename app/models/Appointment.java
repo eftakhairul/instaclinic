@@ -183,10 +183,12 @@ public class Appointment extends Model
     	List<Appointment> appointments = find.all();
     	for (Appointment appointment : appointments) {
 			Schedule schedule = appointment.getSchedule();
-    		if(schedule.getStartTime().getTime() > start.getTime() || schedule.getStartTime().getTime() < end.getTime()) {
-				returnList.add(appointment);
+    		if(schedule.getStartTime().getTime() >= start.getTime() && schedule.getStartTime().getTime() < end.getTime()) {
+				//System.out.println("inside start matching "+schedule.getStartTime().getTime() + " "+start.getTime());
+    			returnList.add(appointment);
 			}
-			else if(schedule.getEndTime().getTime() > start.getTime() || schedule.getEndTime().getTime() < end.getTime()) {
+			else if(schedule.getEndTime().getTime() > start.getTime() && schedule.getEndTime().getTime() <= end.getTime()) {
+				//System.out.println("inside end matching");
 				returnList.add(appointment);
 			}
 		}
