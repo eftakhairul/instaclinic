@@ -16,7 +16,7 @@
             		'_label -> "Select Doctor", 'id -> "doctor")
             @select(appointmentForm("schedule.id"), 
             		options(Schedule.findByType(appointment.getSchedule().getMeetingType())), 
-            		'_label -> "Select Schedule")		
+            		'_label -> "Select Schedule", 'id -> "schedule")		
         </fieldset>
         
         <div class="actions">
