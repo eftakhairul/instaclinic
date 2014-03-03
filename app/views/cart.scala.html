@@ -47,11 +47,12 @@
                 </table>
              </div>
 
+            <input type="hidden" name="totalamount" value="@{total * 20}" id = "totalamount" />
             <fieldset>
                 <legend>Payment Process Information</legend>
                 @inputText(paymentForm("creditCardNo"), '_label -> "Credit Card No.")
                 @inputText(paymentForm("fullName"), '_label -> "Full Name")
-                @inputText(paymentForm("amount"), '_label -> "Total Amount", 'disabled -> "disabled")
+                @inputText(paymentForm("amount"), '_label -> "Amount", 'disabled -> "True")
             </fieldset>
 
             <div class="actions">
@@ -62,7 +63,7 @@
 
         }
 }
-
+<script src="@routes.Assets.at("javascripts/cart.js")" type="text/javascript"></script>
 
 
 

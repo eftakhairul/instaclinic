@@ -3,10 +3,12 @@ package controllers;
 import com.avaje.ebean.Ebean;
 import models.Appointment;
 import models.Payment;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class PaymentController extends Controller {
@@ -25,11 +27,7 @@ public class PaymentController extends Controller {
         Map<String, Appointment> appointments  = Appointment.findByUserId(Long.parseLong(session("user_id")));
         String tolal                           = "" + Appointment.findCountByUserId(Long.parseLong(session("user_id")));
         Form<Payment> filledForm               = paymentForm.bindFromRequest();
-
-        // Check amount zero or less
-        if(filledForm.field("amount").valueOr("").isEmpty() || filledForm.get().getAmount() < 1) {
-                filledForm.reject("amount", "Please insert proper amount");
-        }
+        DynamicForm nonModelFormData           = form().bindFromRequest();
 
         if(filledForm.hasErrors()) {
 
@@ -37,6 +35,7 @@ public class PaymentController extends Controller {
         } else {
             //Inset payment
             Payment newPayment = filledForm.get();
+            newPayment.setAmount(Long.parseLong(nonModelFormData.get("totalamount")));
             Ebean.save(newPayment);
 
             //Update appointment table with corresponding payment id
