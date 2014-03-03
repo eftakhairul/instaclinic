@@ -16,6 +16,7 @@ public class Payment extends Model
 	private int id;
 
     @Constraints.Required
+    @Constraints.MinLength(16)
 	private String creditCardNo;
 
     @Constraints.Required
