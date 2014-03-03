@@ -184,10 +184,10 @@ public class Schedule extends Model
     	ArrayList<Schedule> returnList = new ArrayList<Schedule>();
     	List<Schedule> schedules = find.all();
     	for (Schedule schedule : schedules) {
-			if(schedule.getStartTime().getTime() > start.getTime() || schedule.getStartTime().getTime() < end.getTime()) {
+			if(schedule.getStartTime().getTime() >= start.getTime() && schedule.getStartTime().getTime() < end.getTime()) {
 				returnList.add(schedule);
 			}
-			else if(schedule.getEndTime().getTime() > start.getTime() || schedule.getEndTime().getTime() < end.getTime()) {
+			else if(schedule.getEndTime().getTime() > start.getTime() && schedule.getEndTime().getTime() <= end.getTime()) {
 				returnList.add(schedule);
 			}
 		}

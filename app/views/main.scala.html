@@ -47,19 +47,22 @@
 					            <li><a href="@routes.Authentication.logout()" title="Logout">Logout</a></li>
 				            }
 				            
->>>>>>> f66f9a8f6155dd657ecc690d1167acd99829f0bc
 				        </ul>
 				    </div>
 				</div>
 	    	</div>
 	    	<div class="span12">
 	    		<h1>@title</h1>
-	    		<p class="alert alert-error">
-			 		@flash.get("error")
-			    </p>
-	    		<p class="alert alert-success">
+    			@if(flash.get("error")) {
+    			<div class="alert-message error">
+    			@flash.get("error")
+    			</div>
+    			}
+    			@if(flash.get("success")) {
+	    		<div class="alert-message success">
 			 		@flash.get("success")
-			    </p>
+			    </div>
+			    }
 	        	@content
 	    	</div>
 		</div>

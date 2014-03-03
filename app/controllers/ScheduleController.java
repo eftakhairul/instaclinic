@@ -5,6 +5,7 @@ import java.util.Date;
 import org.joda.time.Days;
 
 import com.avaje.ebean.Ebean;
+import java.util.List;
 
 import play.*;
 import play.data.Form;
@@ -145,7 +146,8 @@ public class ScheduleController extends Controller
   
   public static boolean validate(Schedule schedule)
   {
-	//Validations
+	  
+	  //Validations
       if(schedule.getEndTime().getTime() <= schedule.getStartTime().getTime()) {
     	  flash("error", "endTime cannot be previous time then start time");
     	  return false;
@@ -179,6 +181,17 @@ public class ScheduleController extends Controller
     	  return false;
       }
       
+      User user = User.findById(Long.parseLong(session("user_id")));
+      
+      List<Schedule> schedules = Schedule.findByTime(schedule.getStartTime(), schedule.getEndTime());
+      if(schedules.size() > 0) {
+    	  for (Schedule schedule2 : schedules) {
+			if(schedule2.getUser().getId() == user.getId()) {
+				flash("error", "You have another schedule in that time frame ");
+			}
+    	  }
+      }
+    	  
       return true;
   }
   
