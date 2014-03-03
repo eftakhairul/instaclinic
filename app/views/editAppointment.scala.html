@@ -11,10 +11,10 @@
             @select(appointmentForm("schedule.meetingType"), 
             	models.MeetingType.values.toList.map(v => (v.toString, Messages(v.toString()))), 
             		'_label -> "Meeting Type", 'id -> "meetingType")
-            @select(appointmentForm("schedule.user"), 
+            @select(appointmentForm("schedule.user.id"), 
             		options(User.findByUserRole(UserRole.DOCTOR)), 
             		'_label -> "Select Doctor", 'id -> "doctor")
-            @select(appointmentForm("schedule"), 
+            @select(appointmentForm("schedule.id"), 
             		options(Schedule.findByType(appointment.getSchedule().getMeetingType())), 
             		'_label -> "Select Schedule")		
         </fieldset>

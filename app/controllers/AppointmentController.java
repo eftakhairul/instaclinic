@@ -85,7 +85,7 @@ public class AppointmentController extends Controller
       Room room = Appointment.findAvailableRoom(schedule);
       if(room == null) {
     	  flash("error", "No Room available on this schedule");
-    	  return badRequest(views.html.createAppointment.render(appointmentForm));
+    	  return badRequest(views.html.editAppointment.render(id, appointmentForm, appointment));
       }
       appointment.setRoom(room);
       
@@ -94,8 +94,8 @@ public class AppointmentController extends Controller
       
       for (Appointment appointment2 : appointments) {
 		if(appointment2.getUser().getId() == user.getId()) {
-			flash("error", "You have another appointment overlapped with this schedule");
-	    	return badRequest(views.html.createAppointment.render(appointmentForm));
+			flash("error", "You have another appointment overlapped with this schedule "+appointment2.getId());
+	    	return badRequest(views.html.editAppointment.render(id, appointmentForm, appointment));
 		}
       }
       
