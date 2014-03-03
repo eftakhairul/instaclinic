@@ -5,12 +5,14 @@ import java.util.Date;
 import org.joda.time.Days;
 
 import com.avaje.ebean.Ebean;
+
 import java.util.List;
 
 import play.*;
 import play.data.Form;
 import play.libs.Time;
 import play.mvc.*;
+import models.Appointment;
 import models.MeetingType;
 import models.Schedule;
 import models.User;
@@ -139,7 +141,12 @@ public class ScheduleController extends Controller
    * Handle computer deletion
    */
   public static Result delete(Long id) {
-	  Schedule.find.ref(id).delete();
+	  Schedule schedule = Schedule.find.ref(id);
+	  if(Appointment.findBySchedule(schedule)) {
+		  flash("error", "This schedule can't be deleted as somone got an appointment on this schedule");
+		  return GO_HOME;
+	  }
+	  schedule.delete();
       flash("success", "Schedule has been deleted");
       return GO_HOME;
   }
