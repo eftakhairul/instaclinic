@@ -23,7 +23,6 @@ public class User extends Model{
     private String username;
 
     @Constraints.Required
-    @Constraints.MinLength(6)
     private String password;
 
     @OneToOne(mappedBy="user")

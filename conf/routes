@@ -49,11 +49,13 @@ GET    /appointments/:id/delete            controllers.AppointmentController.del
 GET     /appointments/filter/:meetingType  controllers.AppointmentController.getFilteredSchedules(meetingType: String, doctorId:Int ?= 0)
 
 #Checkout and Payment
-GET    /payment/checkout                   controllers.PaymentController.index()
+GET    /                                   controllers.PaymentController.index()
 POST   /payment/processPayment             controllers.PaymentController.processPayment()
 
 
 #User Management
-GET   /patient                             controllers.UserController.patientList()
-GET   /patient/:id/workAsNurse             controllers.UserController.workAsPatient(id:String)
+GET   /user/patientList                    controllers.UserController.patientList()
+GET   /user/doctorList                     controllers.UserController.doctorList()
+GET   /user/:id/convertRole                controllers.UserController.convertRole(id:String)
+
 
