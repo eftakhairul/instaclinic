@@ -55,11 +55,12 @@ public class AppointmentController extends Controller
    * @param id Id of the computer to edit
    */
   public static Result edit(Long id) {
+	  Appointment appointment = Appointment.find.byId(id);
       Form<Appointment> computerForm = form(Appointment.class).fill(
-    		  Appointment.find.byId(id)
+    		  appointment
       );
       return ok(
-    		  views.html.editAppointment.render(id, computerForm)
+    		  views.html.editAppointment.render(id, computerForm, appointment)
       );
   }
   
@@ -69,13 +70,22 @@ public class AppointmentController extends Controller
    * @param id Id of the computer to edit
    */
   public static Result update(Long id) {
+      //Form<Appointment> appointmentForm = form(Appointment.class).bindFromRequest();
+      
       Form<Appointment> appointmentForm = form(Appointment.class).bindFromRequest();
-      if(appointmentForm.hasErrors()) {
+      int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
+      Schedule schedule = Schedule.findById(scheduleId);
+      
+      Appointment appointment = Appointment.find.byId(id);
+      appointment.setSchedule(schedule);
+      appointment.update();
+      
+      /*if(appointmentForm.hasErrors()) {
     	  //computerForm.errors()[0].
-          return badRequest(views.html.editAppointment.render(id, appointmentForm));
-      }
-      appointmentForm.get().update(id);
-      flash("success", "Computer " + appointmentForm.get().getId() + " has been updated");
+          return badRequest(views.html.editAppointment.render(id, appointmentForm, Appointment.find.byId(id)));
+      }*/
+      //appointmentForm.get().update(id);
+      flash("success", "Appointment has been updated");
       return GO_HOME;
   }
   

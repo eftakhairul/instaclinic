@@ -10,11 +10,13 @@
 }
 
 @main("Appointments List"){    
-    <div id="actions" class="span12">
+    <div id="actions" class="clear span12">
         
         <a class="btn success" id="add" href="@routes.AppointmentController.create()">Add a new Appointment</a>
         
     </div>
+    <br>
+    &nbsp;
     <div class="clear span12">
     @if(currentPage.getTotalRowCount == 0) {
         
@@ -29,6 +31,8 @@
                 <tr>
                     @header("id", "appointment id")
                     @header("create_date", "create date")
+                    @header("schedule_date", "Schedule Date")
+                    @header("schedule_type", "Schedule Type")
                 </tr>
             </thead>
             <tbody>
@@ -36,7 +40,12 @@
                 @for(appointment <- currentPage.getList) {
                     <tr>
                         <td><a href="@routes.AppointmentController.edit(appointment.getId())">@appointment.getId()</a></td>
-                        <td>@appointment.getCreateDate()</td>
+                        <td>@appointment.getCreateDate().format("MM/dd/yyyy HH:mm")</td>
+                        <td>
+                        @appointment.getSchedule().getStartTime().format("MM/dd/yyyy HH:mm") -
+                        @appointment.getSchedule().getEndTime().format("MM/dd/yyyy HH:mm")
+                        </td>
+                        <td>@appointment.getSchedule().getMeetingType()</td>
                     </tr>
                 }
 

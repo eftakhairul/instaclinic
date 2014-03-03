@@ -1,17 +1,22 @@
-@(id: Long, appointmentForm: Form[Appointment])
+@(id: Long, appointmentForm: Form[Appointment], appointment:Appointment)
 
 @import helper._
 
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
     
-    <h1>Edit Appointment</h1>
 @main("Edit Appointment"){    
+<script src="@routes.Assets.at("javascripts/appointment.js")" type="text/javascript"></script>
     @form(routes.AppointmentController.update(id)) {
-        
         <fieldset>
-            @select(appointmentForm("meetingType"), 
+            @select(appointmentForm("schedule.meetingType"), 
             	models.MeetingType.values.toList.map(v => (v.toString, Messages(v.toString()))), 
-            		'_label -> "Meeting Type")
+            		'_label -> "Meeting Type", 'id -> "meetingType")
+            @select(appointmentForm("schedule.user"), 
+            		options(User.findByUserRole(UserRole.DOCTOR)), 
+            		'_label -> "Select Doctor", 'id -> "doctor")
+            @select(appointmentForm("schedule"), 
+            		options(Schedule.findByType(appointment.getSchedule().getMeetingType())), 
+            		'_label -> "Select Schedule")		
         </fieldset>
         
         <div class="actions">
