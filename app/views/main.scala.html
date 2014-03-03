@@ -52,12 +52,16 @@
 	    	</div>
 	    	<div class="span12">
 	    		<h1>@title</h1>
-	    		<p class="alert alert-error">
-			 		@flash.get("error")
-			    </p>
-	    		<p class="alert alert-success">
+    			@if(flash.get("error")) {
+    			<div class="span12 alert-message block-message error">
+    			@flash.get("error")
+    			</div>
+    			}
+    			@if(flash.get("success")) {
+	    		<div class="span12 alert-message block-message success">
 			 		@flash.get("success")
-			    </p>
+			    </div>
+			    }
 	        	@content
 	    	</div>
 		</div>
