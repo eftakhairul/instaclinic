@@ -40,7 +40,11 @@ public class ScheduleController extends Controller
    * @param filter Filter applied on computer names
    */
   public static Result list(int page, String sortBy, String order, String filter) {
-	  User user = User.findById(Long.parseLong(session("user_is")));
+	  User user = null;
+	  if(session().containsKey("user_is")) {
+		  user = User.findById(Long.parseLong(session("user_is")));
+	  }
+	  
 	  if(user == null || user.getUserRole() == UserRole.PATIENT) {
 		  return redirect(routes.Authentication.login());
 	  }
@@ -77,9 +81,20 @@ public class ScheduleController extends Controller
     	  //computerForm.errors()[0].
           return badRequest(views.html.editSchedule.render(id, computerForm));
       }
-      computerForm.get().update(id);
-      flash("success", "Computer " + computerForm.get().getId() + " has been updated");
-      return GO_HOME;
+      Schedule schedule = computerForm.get();
+      if(schedule != null) {
+    	  if(!validate(schedule)) {
+        	  return badRequest(views.html.editSchedule.render(id, computerForm));
+          }
+    	  //System.out.println("new update time: "+schedule.getId());
+    	  schedule.setId(Integer.parseInt(id.toString()));
+    	  schedule.update();
+    	  
+    	  flash("success", "Computer " + schedule.getId() + " has been updated");
+    	  return GO_HOME;
+      }
+      flash("error", "Couldn't save this schedule. Please try later");
+      return badRequest(views.html.editSchedule.render(id, computerForm));
   }
   
   /**
@@ -105,27 +120,7 @@ public class ScheduleController extends Controller
       
       Schedule schedule = scheduleForm.get();
       
-      //Validations
-      if(schedule.getEndTime().getTime() <= schedule.getStartTime().getTime()) {
-    	  flash("error", "endTime cannot be previous time then start time");
-    	  return badRequest(views.html.createSchedule.render(scheduleForm));
-      }
-      
-      long timeDiff = (schedule.getEndTime().getTime() - schedule.getStartTime().getTime())/60000;
-      
-      if(timeDiff == 20) {
-    	  schedule.setMeetingType(MeetingType.REGULAR);
-      }
-      else if(timeDiff == 60) {
-    	  schedule.setMeetingType(MeetingType.YEARLY);
-      }
-      else {
-    	  flash("error", "schedule must be 20 minutes or 60 minutes in length");
-          return badRequest(views.html.createSchedule.render(scheduleForm));
-      }
-      
-      if(schedule.getEndTime().getTime() < new Date().getTime() || schedule.getStartTime().getTime() < new Date().getTime()) {
-    	  flash("error", "Time cannot be in past time");
+      if(!validate(schedule)) {
     	  return badRequest(views.html.createSchedule.render(scheduleForm));
       }
       //validation ends
@@ -146,6 +141,45 @@ public class ScheduleController extends Controller
 	  Schedule.find.ref(id).delete();
       flash("success", "Computer has been deleted");
       return GO_HOME;
+  }
+  
+  public static boolean validate(Schedule schedule)
+  {
+	//Validations
+      if(schedule.getEndTime().getTime() <= schedule.getStartTime().getTime()) {
+    	  flash("error", "endTime cannot be previous time then start time");
+    	  return false;
+      }
+      
+      long timeDiff = (schedule.getEndTime().getTime() - schedule.getStartTime().getTime())/60000;
+      
+      if(timeDiff == 20) {
+    	  schedule.setMeetingType(MeetingType.REGULAR);
+      }
+      else if(timeDiff == 60) {
+    	  schedule.setMeetingType(MeetingType.YEARLY);
+      }
+      else {
+    	  flash("error", "schedule must be 20 minutes or 60 minutes in length");
+          return false;
+      }
+      
+      if(schedule.getEndTime().getTime() < new Date().getTime() || schedule.getStartTime().getTime() < new Date().getTime()) {
+    	  flash("error", "Time cannot be in past time");
+    	  return false;
+      }
+      
+      if(schedule.getStartTime().getHours() < 8) {
+    	  flash("error", "Office time starts at 8:00 AM");
+    	  return false;
+      }
+      
+      if(schedule.getEndTime().getHours() > 17) {
+    	  flash("error", "Office time ends at 5:00 PM");
+    	  return false;
+      }
+      
+      return true;
   }
   
 }

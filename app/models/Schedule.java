@@ -28,11 +28,11 @@ public class Schedule extends Model
 	@Id
 	private int id;
 	
-	@Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
+	@Formats.DateTime(pattern="MM/dd/yyyy HH:mm")
 	@Constraints.Required
 	private Date startTime;
 	
-	@Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
+	@Formats.DateTime(pattern="MM/dd/yyyy HH:mm")
 	@Constraints.Required
 	private Date endTime;
 	
@@ -45,6 +45,11 @@ public class Schedule extends Model
 	{
 		this.startTime = startTime;
 		this.endTime   = endTime;
+	}
+	
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 	
 	public int getId()

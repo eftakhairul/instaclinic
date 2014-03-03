@@ -3,12 +3,11 @@
 @import helper._
 
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
-    
-    <h1>Edit Schedule</h1>
 @main("Edit Schedule"){    
+	<script src="@routes.Assets.at("javascripts/schedule.js")" type="text/javascript"></script>
     @form(routes.ScheduleController.update(id)) {
-        
         <fieldset>
+            <input type="hidden" name="id" value="@computerForm.get().getId()" />
             @inputText(computerForm("startTime"), '_label -> "Start date")
             @inputText(computerForm("endTime"), '_label -> "End date")
         </fieldset>
@@ -20,6 +19,6 @@
     }
     
     @form(routes.ScheduleController.delete(id), 'class -> "topRight") {
-        <input type="submit" value="Delete this Schedule" class="btn danger">
+        <input type="submit" value="Cancel this Schedule" class="btn danger">
     }
 }    
