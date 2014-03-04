@@ -34,6 +34,7 @@
                     @header("schedule_date", "Schedule Date")
                     @header("schedule_type", "Schedule Type")
                     @header("is_paid", "Payment Status")
+                    @header("room_no", "Room No")
                 </tr>
             </thead>
             <tbody>
@@ -54,6 +55,7 @@
                         </td>
                         <td>@appointment.getSchedule().getMeetingType()</td>
                         <td>@if(appointment.getPayment() != null){Paid}else{Not paid}</td>
+                        <td>@appointment.getRoom().getId()</td>
                     </tr>
                 }
 
