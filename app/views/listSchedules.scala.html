@@ -56,7 +56,6 @@
                     @header("date", "Date")
                     @header("startTime", "Start Time")
                     @header("endTime", "End Time")
-                    @header("type", "Schedule Type")
                 </tr>
             </thead>
             <tbody>
@@ -65,23 +64,22 @@
                     <tr>
                         <td><a href="@routes.ScheduleController.edit(schedule.getId())">@schedule.getId()</a></td>
                         <td>
-                        	@schedule.getStartTime().format("dd MMM yyyy")
+                        	@schedule.getScheduleDate().format("dd MMM yyyy")
                         </td>
                         <td>
                             @if(schedule.getStartTime() == null) {
                                 <em>-</em>
                             } else {
-                                @schedule.getStartTime().format("HH:mm:ss")
+                                @schedule.getStartTime().format("hh:mm a")
                             }
                         </td>
                         <td>
                             @if(schedule.getEndTime() == null) {
                                 <em>-</em>
                             } else {
-                                @schedule.getEndTime().format("HH:mm:ss")
+                                @schedule.getEndTime().format("hh:mm a")
                             }
                         </td>
-                        <td>@schedule.getMeetingType().toString()</td>
                     </tr>
                 }
 

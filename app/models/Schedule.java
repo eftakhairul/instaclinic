@@ -29,11 +29,15 @@ public class Schedule extends Model
 	@Id
 	private int id;
 	
-	@Formats.DateTime(pattern="MM/dd/yyyy HH:mm")
+	@Formats.DateTime(pattern="MM/dd/YYYY")
+	@Constraints.Required
+	private Date scheduleDate;
+	
+	@Formats.DateTime(pattern="HH:mm")
 	@Constraints.Required
 	private Date startTime;
 	
-	@Formats.DateTime(pattern="MM/dd/yyyy HH:mm")
+	@Formats.DateTime(pattern="HH:mm")
 	@Constraints.Required
 	private Date endTime;
 	
@@ -42,10 +46,11 @@ public class Schedule extends Model
 	
 	private MeetingType meetingType;
 	
-	public Schedule(Date startTime, Date endTime)
+	public Schedule(Date startTime, Date endTime, Date scheduleDate)
 	{
 		this.startTime = startTime;
 		this.endTime   = endTime;
+		this.scheduleDate = scheduleDate;
 	}
 	
 	public void setId(int id)
@@ -56,6 +61,16 @@ public class Schedule extends Model
 	public int getId()
 	{
 		return id;
+	}
+	
+	public Date getScheduleDate()
+	{
+		return scheduleDate;
+	}
+	
+	public void setScheduleDate(Date scheduleDate)
+	{
+		this.scheduleDate = scheduleDate;
 	}
 	
 	public Date getStartTime()
@@ -172,12 +187,12 @@ public class Schedule extends Model
      * Demo schedules to work with
      * @return
      */
-    public static ArrayList<Schedule> demo()
+    /*public static ArrayList<Schedule> demo()
     {
     	ArrayList<Schedule> schedules = new ArrayList<Schedule>();
     	schedules.add(new Schedule(new Date(), new Date()));
     	return schedules;
-    }
+    }*/
     
     public static List<Schedule> findByTime(Date start, Date end)
     {

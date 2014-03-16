@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.joda.time.Days;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import play.*;
 import play.data.Form;
+import play.data.format.Formats.DateTime;
 import play.libs.Time;
 import play.mvc.*;
 import models.Appointment;
@@ -160,7 +162,7 @@ public class ScheduleController extends Controller
     	  return false;
       }
       
-      long timeDiff = (schedule.getEndTime().getTime() - schedule.getStartTime().getTime())/60000;
+      /*long timeDiff = (schedule.getEndTime().getTime() - schedule.getStartTime().getTime())/60000;
       
       if(timeDiff == 20) {
     	  schedule.setMeetingType(MeetingType.REGULAR);
@@ -171,14 +173,14 @@ public class ScheduleController extends Controller
       else {
     	  flash("error", "schedule must be 20 minutes or 60 minutes in length");
           return false;
-      }
+      }*/
       
-      if(schedule.getEndTime().getTime() < new Date().getTime() || schedule.getStartTime().getTime() < new Date().getTime()) {
+      if(Calendar.getInstance().after(schedule.getScheduleDate())) {
     	  flash("error", "Time cannot be in past time");
     	  return false;
       }
       
-      if(schedule.getStartTime().getHours() < 8) {
+      /*if(schedule.getStartTime().getHours() < 8) {
     	  flash("error", "Office time starts at 8:00 AM");
     	  return false;
       }
@@ -186,7 +188,7 @@ public class ScheduleController extends Controller
       if(schedule.getEndTime().getHours() > 17) {
     	  flash("error", "Office time ends at 5:00 PM");
     	  return false;
-      }
+      }*/
       
       User user = User.findById(Long.parseLong(session("user_id")));
       

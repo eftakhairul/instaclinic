@@ -8,10 +8,11 @@
     @form(routes.ScheduleController.update(id)) {
         <fieldset>
             <input type="hidden" name="id" value="@computerForm.get().getId()" />
+            @inputText(computerForm("scheduleDate"), '_label -> "Date")
             @inputText(computerForm("startTime"), '_label -> "Start date")
             @inputText(computerForm("endTime"), '_label -> "End date")
         </fieldset>
-        
+        <div id="slider-range"></div>
         <div class="actions">
             <input type="submit" value="Save this schedule" class="btn primary"> or 
             <a href="@routes.ScheduleController.list()" class="btn">Cancel</a> 
