@@ -192,7 +192,7 @@ public class ScheduleController extends Controller
       
       User user = User.findById(Long.parseLong(session("user_id")));
       
-      List<Schedule> schedules = Schedule.findByTime(schedule.getStartTime(), schedule.getEndTime());
+      List<Schedule> schedules = Schedule.findByTime(schedule.getScheduleDate(), schedule.getStartTime(), schedule.getEndTime());
       if(schedules.size() > 0) {
     	  for (Schedule schedule2 : schedules) {
 			if(schedule2.getUser().getId() == user.getId()) {

@@ -153,7 +153,15 @@ public class Schedule extends Model
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
     	for(Schedule c: schedules) {
         	//if(!Appointment.findBySchedule(c)) {
-        		options.put(c.toString(), new SimpleDateFormat("MM/dd/yyyy").format(c.scheduleDate) + " " + formatter.format(c.startTime) + " To " + formatter.format(c.endTime));
+    		Date start = c.startTime;
+    		Date end   = c.endTime;
+    		int i = 0;
+    		while(start.getTime() < end.getTime()) {
+    			options.put(i+"", new SimpleDateFormat("MM/dd/yyyy").format(c.scheduleDate) + "-" + formatter.format(c.startTime) + "-" + formatter.format(new Date(c.startTime.getTime()+(interval*60000))));
+    			c.startTime.setTime(c.startTime.getTime()+(interval*60000));
+    			i++;
+    		}
+        		//options.put(c.toString(), new SimpleDateFormat("MM/dd/yyyy").format(c.scheduleDate) + "-" + formatter.format(c.startTime) + "-" + formatter.format(c.endTime));
         	//}
         }
         return options;
@@ -196,11 +204,15 @@ public class Schedule extends Model
     	return schedules;
     }*/
     
-    public static List<Schedule> findByTime(Date start, Date end)
+    public static List<Schedule> findByTime(Date d, Date start, Date end)
     {
     	ArrayList<Schedule> returnList = new ArrayList<Schedule>();
     	List<Schedule> schedules = find.all();
     	for (Schedule schedule : schedules) {
+    		if(new SimpleDateFormat("MM/dd/yy").format(schedule.scheduleDate) != new SimpleDateFormat("MM/dd/yy").format(d))
+    		{
+    			continue;
+    		}
 			if(schedule.getStartTime().getTime() >= start.getTime() && schedule.getStartTime().getTime() < end.getTime()) {
 				returnList.add(schedule);
 			}
