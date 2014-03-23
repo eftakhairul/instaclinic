@@ -9,6 +9,12 @@ $(document).ready(function(){
 	
 	$( "#selectable" ).selectable();
 	
+	$("#appointmentDate").datepicker();
+	
+	$("#schedule").change(function(){
+		setStartEnd($(this).val());
+	});
+	
 });
 
 function filterByMeeting(meetingType) {
@@ -47,7 +53,7 @@ function showSchedules(data)
 		//var end = getIntValue(parts[2]);
 		//var interval = 
 		//while(start < end) {
-			var option = $('<option></option>').attr("value", index).text(parts[1]+" - "+parts[2]);
+			var option = $('<option></option>').attr("value", index).text(value);
 		//}
 		//group.append(option);
 		$("#schedule").append(option);
@@ -66,4 +72,11 @@ function formatValue(value) {
 	hour = Math.floor(8+hour);
 	var minute = value%60;
 	return pad(hour)+":"+pad(minute);
+}
+
+function setStartEnd(time) {
+	var parts = time.split("-");
+	$("#startTime").val(parts[0]);
+	$("#endTime").val(parts[1]);
+	//alert(parts[1] + " " + parts[2] + " "+time);
 }

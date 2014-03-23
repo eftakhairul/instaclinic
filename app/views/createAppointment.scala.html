@@ -10,7 +10,8 @@
     @form(routes.AppointmentController.save()) {
         
         <fieldset>
-             @select(appointmentForm("meetingType"), 
+            @inputText(appointmentForm("appointmentDate"), '_label -> "Appointment Date")		
+            @select(appointmentForm("meetingType"), 
             	models.MeetingType.values.toList.map(v => (v.toString, Messages(v.toString()))), 
             		'_label -> "Meeting Type")            
             @select(appointmentForm("doctor"), 
@@ -18,7 +19,9 @@
             		'_label -> "Select Doctor")
             @select(appointmentForm("schedule"), 
             		options(Schedule.findByType(MeetingType.REGULAR)), 
-            		'_label -> "Select Schedule")
+            		'_label -> "Select Time")
+            <input type="hidden" id="startTime" name="startTime" value="" />
+            <input type="hidden" id="endTime" name="endTime" value="" />
             				
         </fieldset>
         

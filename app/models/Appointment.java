@@ -27,7 +27,7 @@ public class Appointment extends Model
 	@Id
 	private Long id;
 	
-	@Formats.DateTime(pattern="MM/dd/YYYY")
+	@Formats.DateTime(pattern="MM/dd/yyyy")
 	@Constraints.Required
 	private Date appointmentDate;
 	
@@ -206,10 +206,10 @@ public class Appointment extends Model
         return find.where().eq("user_id", id).isNull("payment_id").findRowCount();
     }
     
-    public static Room findAvailableRoom(Schedule schedule)
+    public Room findAvailableRoom()
     {
     	List<Room> rooms = Room.getAllRooms();
-    	List<Appointment> appointments = findByTime(schedule.getStartTime(), schedule.getEndTime());
+    	List<Appointment> appointments = findByTime(this.getStartTime(), this.getEndTime());
     	
     	for (Room room : rooms) {
     		System.out.println("Checking for room "+room.getId());

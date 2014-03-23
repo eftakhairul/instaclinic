@@ -30,9 +30,9 @@
             <thead>
                 <tr>
                     @header("id", "appointment id")
-                    @header("create_date", "create date")
-                    @header("schedule_date", "Schedule Date")
-                    @header("schedule_type", "Schedule Type")
+                    @header("appointment_date", "Appointment date")
+                    @header("appointment_time", "Appointment Time")
+                    @header("appointment_type", "Appointment Type")
                     @header("is_paid", "Payment Status")
                     @header("room_no", "Room No")
                 </tr>
@@ -48,10 +48,10 @@
                         	<a href="@routes.AppointmentController.edit(appointment.getId())">@appointment.getId()</a>
                         }
                         </td>
-                        <td>@appointment.getCreateDate().format("MM/dd/yyyy HH:mm")</td>
+                        <td>@appointment.getAppointmentDate().format("MM/dd/yyyy")</td>
                         <td>
-                        @appointment.getStartTime().format("MM/dd/yyyy HH:mm") -
-                        @appointment.getEndTime().format("MM/dd/yyyy HH:mm")
+                        @appointment.getStartTime().format("HH:mm") -
+                        @appointment.getEndTime().format("HH:mm")
                         </td>
                         <td>@appointment.getMeetingType()</td>
                         <td>@if(appointment.getPayment() != null){Paid}else{Not paid}</td>

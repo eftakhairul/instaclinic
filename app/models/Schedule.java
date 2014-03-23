@@ -157,7 +157,8 @@ public class Schedule extends Model
     		Date end   = c.endTime;
     		int i = 0;
     		while(start.getTime() < end.getTime()) {
-    			options.put(i+"", new SimpleDateFormat("MM/dd/yyyy").format(c.scheduleDate) + "-" + formatter.format(c.startTime) + "-" + formatter.format(new Date(c.startTime.getTime()+(interval*60000))));
+    			String option = formatter.format(c.startTime) + "-" + formatter.format(new Date(c.startTime.getTime()+(interval*60000)));
+    			options.put(option, option);
     			c.startTime.setTime(c.startTime.getTime()+(interval*60000));
     			i++;
     		}
