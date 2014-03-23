@@ -29,7 +29,7 @@ public class Schedule extends Model
 	@Id
 	private int id;
 	
-	@Formats.DateTime(pattern="MM/dd/YYYY")
+	@Formats.DateTime(pattern="MM/dd/yyyy")
 	@Constraints.Required
 	private Date scheduleDate;
 	
@@ -145,14 +145,16 @@ public class Schedule extends Model
     }
     
     public static Map<String,String> findByType(MeetingType type) {
-    	List<Schedule> schedules = find.where()
-        		.eq("meetingType", type).orderBy("startTime")
+    	List<Schedule> schedules = find
+        		.orderBy("startTime")
         		.findList();
     	LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
-        for(Schedule c: schedules) {
-        	if(!Appointment.findBySchedule(c)) {
-        		options.put(c.toString(), new SimpleDateFormat("MM/dd/yy HH:mm").format(c.startTime) + " To " +new SimpleDateFormat("MM/dd/yy HH:mm").format(c.endTime));
-        	}
+        int interval = (type == MeetingType.REGULAR)?20:60;
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+    	for(Schedule c: schedules) {
+        	//if(!Appointment.findBySchedule(c)) {
+        		options.put(c.toString(), new SimpleDateFormat("MM/dd/yyyy").format(c.scheduleDate) + " " + formatter.format(c.startTime) + " To " + formatter.format(c.endTime));
+        	//}
         }
         return options;
     }

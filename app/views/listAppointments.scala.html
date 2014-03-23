@@ -50,10 +50,10 @@
                         </td>
                         <td>@appointment.getCreateDate().format("MM/dd/yyyy HH:mm")</td>
                         <td>
-                        @appointment.getSchedule().getStartTime().format("MM/dd/yyyy HH:mm") -
-                        @appointment.getSchedule().getEndTime().format("MM/dd/yyyy HH:mm")
+                        @appointment.getStartTime().format("MM/dd/yyyy HH:mm") -
+                        @appointment.getEndTime().format("MM/dd/yyyy HH:mm")
                         </td>
-                        <td>@appointment.getSchedule().getMeetingType()</td>
+                        <td>@appointment.getMeetingType()</td>
                         <td>@if(appointment.getPayment() != null){Paid}else{Not paid}</td>
                         <td>@appointment.getRoom().getId()</td>
                     </tr>

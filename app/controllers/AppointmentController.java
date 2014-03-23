@@ -80,7 +80,7 @@ public class AppointmentController extends Controller
       Schedule schedule = Schedule.findById(scheduleId);
       
       Appointment appointment = Appointment.find.byId(id);
-      appointment.setSchedule(schedule);
+      //appointment.setSchedule(schedule);
       
       Room room = Appointment.findAvailableRoom(schedule);
       if(room == null) {
@@ -124,7 +124,7 @@ public class AppointmentController extends Controller
       Schedule schedule = Schedule.findById(scheduleId);
       
       
-      Appointment appointment = new Appointment(new Room(), schedule);
+      Appointment appointment = new Appointment(new Room());
       
       //TODO check room availability
       Room room = Appointment.findAvailableRoom(schedule);

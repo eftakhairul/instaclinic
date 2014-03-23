@@ -6,6 +6,9 @@ $(document).ready(function(){
 	$("#doctor").change(function(){
 		filterByDoctor($(this).val());
 	});
+	
+	$( "#selectable" ).selectable();
+	
 });
 
 function filterByMeeting(meetingType) {

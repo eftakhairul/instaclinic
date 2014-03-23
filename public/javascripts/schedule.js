@@ -8,12 +8,20 @@ $(document).ready(function(){
 });
 
 $(function() {
-    var slider = $("#slider-range").slider({
+	if($("#slider-range").length <= 0) return;
+	
+	var start = getIntValue($("#startTime").val())?getIntValue($("#startTime").val()):getIntValue("8:00");
+	var end   = getIntValue($("#endTime").val())?getIntValue($("#endTime").val()):getIntValue("17:00");
+    
+	$("#startTime").val(formatValue(start));
+	$("#endTime").val(formatValue(end));
+	
+	var slider = $("#slider-range").slider({
         orientation: 'horizontal',
         range: true,
         min: 0,
         max: 540,
-        values: [getIntValue($("#startTime").val()), getIntValue($("#endTime").val())],
+        values: [start, end],
         slide: function(event, ui) {
             var includeLeft = event.keyCode != $.ui.keyCode.RIGHT;
             var includeRight = event.keyCode != $.ui.keyCode.LEFT;

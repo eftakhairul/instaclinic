@@ -15,7 +15,7 @@
             		options(User.findByUserRole(UserRole.DOCTOR)), 
             		'_label -> "Select Doctor", 'id -> "doctor")
             @select(appointmentForm("schedule.id"), 
-            		options(Schedule.findByType(appointment.getSchedule().getMeetingType())), 
+            		options(Schedule.findByType(appointment.getMeetingType())), 
             		'_label -> "Select Schedule", 'id -> "schedule")		
         </fieldset>
         
