@@ -58,4 +58,13 @@ GET   /user/patientList                    controllers.UserController.patientLis
 GET   /user/doctorList                     controllers.UserController.doctorList()
 GET   /user/:id/convertRole                controllers.UserController.convertRole(id:String)
 
+#Room Management
+GET   /room                                controllers.RoomController.index()
+GET   /room/new                            controllers.RoomController.create()
+POST  /room/save                           controllers.RoomController.save()
+GET   /room/:id/delete                     controllers.RoomController.delete(id:Long)
+
+
+
+
 

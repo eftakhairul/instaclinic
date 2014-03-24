@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 import com.avaje.ebean.Ebean;
 
+import com.avaje.ebean.Page;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
 
@@ -25,13 +26,35 @@ public class Room extends Model
 	
 	public static Finder<Long,Room> find = new Finder<Long,Room>(Long.class, Room.class); 
 	
-	public static Room getDemo()
-	{
-		return Ebean.find(Room.class, 1);
+	public static Room getDemo() {
+
+        return Ebean.find(Room.class, 1);
+
 	}
 	
-	public static List<Room> getAllRooms()
-	{
-		return find.all();
+	public static List<Room> getAllRooms() {
+        return find.all();
 	}
+
+    /**
+     * Return a page of Room
+     *
+     * @param page Page to display
+     * @param pageSize Number of computers per page
+     * @param sortBy Computer property used for sorting
+     * @param order Sort order (either or asc or desc)
+     * @param filter Filter applied on the name column
+     */
+    public static Page<Room> page(int page, int pageSize, String sortBy, String order, String filter) {
+        return find.where()
+                   .findPagingList(pageSize)
+                   .getPage(page);
+    }
+
+    /**
+     * Return toString
+     */
+    public String toString() {
+        return id + "";
+    }
 }
