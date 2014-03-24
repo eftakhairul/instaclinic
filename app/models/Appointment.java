@@ -10,6 +10,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 import com.avaje.ebean.Page;
 
+import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
@@ -26,10 +27,18 @@ public class Appointment extends Model
 	@Id
 	private Long id;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@PrimaryKeyJoinColumn
+	@Formats.DateTime(pattern="MM/dd/yyyy")
 	@Constraints.Required
-	private Schedule schedule;
+	private Date appointmentDate;
+	
+	@Formats.DateTime(pattern="HH:mm")
+	@Constraints.Required
+	private Date startTime;
+	
+	@Formats.DateTime(pattern="HH:mm")
+	@Constraints.Required
+	private Date endTime;
+	
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@PrimaryKeyJoinColumn
@@ -45,14 +54,16 @@ public class Appointment extends Model
 	private Payment payment;
 
     private Date create_date;
+    
+    private MeetingType meetingType;
 
     public Appointment() {
         this.create_date = new Date();
     }
 	
-	public Appointment(Room room, Schedule schedule)
+	public Appointment(Room room)
 	{
-		this.schedule    = schedule;
+		//this.schedule    = schedule;
 		this.room        = room;
         this.create_date = new Date();
 	}
@@ -72,7 +83,7 @@ public class Appointment extends Model
 		this.room = room;
 	}
 	
-	public Schedule getSchedule()
+	/*public Schedule getSchedule()
 	{
 		return this.schedule;
 	}
@@ -80,7 +91,7 @@ public class Appointment extends Model
 	public void setSchedule(Schedule schedule)
 	{
 		this.schedule = schedule;
-	}
+	}*/
 	
 	public User getUser()
 	{
@@ -104,6 +115,46 @@ public class Appointment extends Model
 	public void setPayment(Payment payment)
 	{
 		this.payment = payment;
+	}
+	
+	public Date getStartTime()
+	{
+		return this.startTime;
+	}
+	
+	public void setStartTime(Date startTime)
+	{
+		this.startTime = startTime;
+	}
+	
+	public Date getEndTime()
+	{
+		return this.endTime;
+	}
+	
+	public void setEndTime(Date endTime)
+	{
+		this.endTime = endTime;
+	}
+	
+	public Date getAppointmentDate()
+	{
+		return this.appointmentDate;
+	}
+	
+	public void setAppointmentDate(Date appointmentDate)
+	{
+		this.appointmentDate = appointmentDate;
+	}
+	
+	public void setMeetingType(MeetingType meetingType)
+	{
+		this.meetingType = meetingType;
+	}
+	
+	public MeetingType getMeetingType()
+	{
+		return this.meetingType;
 	}
 	
 	/**
@@ -155,10 +206,10 @@ public class Appointment extends Model
         return find.where().eq("user_id", id).isNull("payment_id").findRowCount();
     }
     
-    public static Room findAvailableRoom(Schedule schedule)
+    public Room findAvailableRoom()
     {
     	List<Room> rooms = Room.getAllRooms();
-    	List<Appointment> appointments = findByTime(schedule.getStartTime(), schedule.getEndTime());
+    	List<Appointment> appointments = findByTime(this.getStartTime(), this.getEndTime());
     	
     	for (Room room : rooms) {
     		System.out.println("Checking for room "+room.getId());
@@ -187,12 +238,12 @@ public class Appointment extends Model
     	ArrayList<Appointment> returnList = new ArrayList<Appointment>();
     	List<Appointment> appointments = find.all();
     	for (Appointment appointment : appointments) {
-			Schedule schedule = appointment.getSchedule();
-    		if(schedule.getStartTime().getTime() >= start.getTime() && schedule.getStartTime().getTime() < end.getTime()) {
+			//Schedule schedule = appointment.getSchedule();
+    		if(appointment.getStartTime().getTime() >= start.getTime() && appointment.getStartTime().getTime() < end.getTime()) {
 				//System.out.println("inside start matching "+schedule.getStartTime().getTime() + " "+start.getTime());
     			returnList.add(appointment);
 			}
-			else if(schedule.getEndTime().getTime() > start.getTime() && schedule.getEndTime().getTime() <= end.getTime()) {
+			else if(appointment.getEndTime().getTime() > start.getTime() && appointment.getEndTime().getTime() <= end.getTime()) {
 				//System.out.println("inside end matching");
 				returnList.add(appointment);
 			}
@@ -202,13 +253,14 @@ public class Appointment extends Model
     
     public static boolean findBySchedule(Schedule schedule)
     {
-    	List<Appointment> appointments = find.all();
+    	//TODO
+    	/*List<Appointment> appointments = find.all();
     	for (Appointment appointment : appointments) {
     		Schedule schedule2 = appointment.getSchedule();
     		if(schedule.getId() == schedule2.getId()) {
     			return true;
     		}
-    	}
+    	}*/
     	return false;
     }
 }

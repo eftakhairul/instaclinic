@@ -10,7 +10,8 @@
     @form(routes.AppointmentController.save()) {
         
         <fieldset>
-             @select(appointmentForm("meetingType"), 
+            @inputText(appointmentForm("appointmentDate"), '_label -> "Appointment Date")		
+            @select(appointmentForm("meetingType"), 
             	models.MeetingType.values.toList.map(v => (v.toString, Messages(v.toString()))), 
             		'_label -> "Meeting Type")            
             @select(appointmentForm("doctor"), 
@@ -18,13 +19,40 @@
             		'_label -> "Select Doctor")
             @select(appointmentForm("schedule"), 
             		options(Schedule.findByType(MeetingType.REGULAR)), 
-            		'_label -> "Select Schedule")
+            		'_label -> "Select Time")
+            <input type="hidden" id="startTime" name="startTime" value="" />
+            <input type="hidden" id="endTime" name="endTime" value="" />
             				
         </fieldset>
         
         <div class="actions">
             <input type="submit" value="Create this appointment" class="btn primary"> or 
             <a href="@routes.AppointmentController.list()" class="btn">Cancel</a> 
+        </div>
+        
+        <div class="clear" style="display:none">
+	        <ol id="selectable">
+				<li class="ui-state-default">1</li>
+				<li class="ui-state-default">2</li>
+				<li class="ui-state-default">3</li>
+				<li class="ui-state-default">4</li>
+				<li class="ui-state-default">5</li>
+				<li class="ui-state-default">6</li>
+				<li class="ui-state-default">7</li>
+				<li class="ui-state-default">8</li>
+				<li class="ui-state-default">9</li>
+				<li class="ui-state-default">10</li>
+				<li class="ui-state-default">11</li>
+				<li class="ui-state-default">12</li>
+			</ol>
         </div>       
+        
+         <style>
+			#feedback { font-size: 1.4em; }
+			#selectable .ui-selecting { background: #FECA40; }
+			#selectable .ui-selected { background: #F39814; color: white; }
+			#selectable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
+			#selectable li { margin: 3px; padding: 1px; float: left; width: 100px; height: 80px; font-size: 4em; text-align: center; }
+		</style>
     }   
 }

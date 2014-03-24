@@ -80,9 +80,10 @@ public class AppointmentController extends Controller
       Schedule schedule = Schedule.findById(scheduleId);
       
       Appointment appointment = Appointment.find.byId(id);
-      appointment.setSchedule(schedule);
+      //appointment.setSchedule(schedule);
+      //set start/end time
       
-      Room room = Appointment.findAvailableRoom(schedule);
+      Room room = appointment.findAvailableRoom();
       if(room == null) {
     	  flash("error", "No Room available on this schedule");
     	  return badRequest(views.html.editAppointment.render(id, appointmentForm, appointment));
@@ -120,14 +121,20 @@ public class AppointmentController extends Controller
    */
   public static Result save() {
       Form<Appointment> appointmentForm = form(Appointment.class).bindFromRequest();
-      int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
-      Schedule schedule = Schedule.findById(scheduleId);
+      //int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
+      //Schedule schedule = Schedule.findById(scheduleId);
       
+      Appointment appointment = appointmentForm.get();
       
-      Appointment appointment = new Appointment(new Room(), schedule);
+      //Appointment appointment = new Appointment(new Room());
+      
+      //appointment.setAppointmentDate(new Date(appointmentForm.field("appointmentDate").value()));
+      
+      //String parts = appointmentForm.field("appointmentTime").value();
+      //appointment.setAppointmentDate(new Date(appointmentForm.field("appointmentDate").value()));
       
       //TODO check room availability
-      Room room = Appointment.findAvailableRoom(schedule);
+      Room room = appointment.findAvailableRoom();
       if(room == null) {
     	  flash("error", "No Room available on this schedule");
     	  return badRequest(views.html.createAppointment.render(appointmentForm));
@@ -137,8 +144,8 @@ public class AppointmentController extends Controller
       
       User user = User.findById(Long.parseLong(session().get("user_id")));
       
-      List<Appointment> appointments = Appointment.findByTime(schedule.getStartTime(), schedule.getEndTime());
-      System.out.println("appointments foound: "+appointments.size()+" "+schedule.getStartTime());
+      List<Appointment> appointments = Appointment.findByTime(appointment.getStartTime(), appointment.getEndTime());
+      System.out.println("appointments foound: "+appointments.size()+" "+appointment.getStartTime());
       for (Appointment appointment2 : appointments) {
 		if(appointment2.getUser().getId() == user.getId()) {
 			flash("error", "You have another appointment overlapped with this schedule");
