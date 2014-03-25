@@ -64,7 +64,6 @@ public class RoomController extends Controller
       Form<Room> roomForm = form(Room.class).bindFromRequest();
 
       if(roomForm.hasErrors()) {
-    	  //flash("error", scheduleForm.errorsAsJson());
           return badRequest(createRoom.render(roomForm));
       }
 
@@ -81,16 +80,12 @@ public class RoomController extends Controller
   }
   
   /**
-   * Handle computer deletion
+   * Delete room
    */
   public static Result delete(Long id) {
-//	  Schedule schedule = Schedule.find.ref(id);
-//	  if(Appointment.findBySchedule(schedule)) {
-//		  flash("error", "This schedule can't be deleted as somone got an appointment on this schedule");
-//		  return GO_HOME;
-//	  }
-//	  schedule.delete();
-//      flash("success", "Schedule has been deleted");
+	  Room room  = Room.find.ref(id);
+	  room.delete();
+      flash("success", "Room has been deleted successfully");
       return GO_HOME;
   }
 }
