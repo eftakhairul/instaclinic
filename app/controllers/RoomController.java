@@ -4,16 +4,10 @@ import models.*;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.createSchedule;
-import views.html.editSchedule;
 import models.Room;
 import views.html.*;
 
 
-import java.util.Date;
-import java.util.List;
-
-import static com.avaje.ebean.Ebean.validate;
 
 public class RoomController extends Controller
 {
@@ -68,14 +62,8 @@ public class RoomController extends Controller
       }
 
       Room room = roomForm.get();
-
-//      if(!validate(room)) {
-//    	  return badRequest(createRoom.render(roomForm));
-//      }
-
       room.save();
       flash("success", "Room has been created");
-
       return GO_HOME;
   }
   
