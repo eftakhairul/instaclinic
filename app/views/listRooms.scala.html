@@ -37,7 +37,7 @@
 
 @main("Room List"){
     <div class="span12 clear">
-        <a class="btn success" id="add" href="@controllers.RoomController.create()">Add a new Room</a>
+        <a class="btn success" id="add" href="@routes.RoomController.create()">Add a new Room</a>
     </div>
     <br>
     &nbsp;
@@ -62,7 +62,7 @@
                     <tr>
                         <td>@room.getId()</td>
                         <td>@room.toString()</td>
-                        <td><a href="@controllers.RoomController.delete(room.getId())">Delete</a></td>
+                        <td><a href="@routes.RoomController.delete(room.getId())">Delete</a></td>
                     </tr>
                 }
             </tbody>

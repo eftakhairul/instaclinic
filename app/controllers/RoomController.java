@@ -45,9 +45,8 @@ public class RoomController extends Controller
    * Display the 'new computer form'.
    */
   public static Result create() {
-      Form<Schedule> scheduleForm = form(Schedule.class);
-      return ok(
-    		  createSchedule.render(scheduleForm)
+      Form<Room> roomForm = form(Room.class);
+      return ok(createRoom.render(roomForm)
       );
   }
 

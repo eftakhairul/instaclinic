@@ -57,6 +57,9 @@ POST   /payment/processPayment             controllers.PaymentController.process
 GET   /user/patientList                    controllers.UserController.patientList()
 GET   /user/doctorList                     controllers.UserController.doctorList()
 GET   /user/:id/convertRole                controllers.UserController.convertRole(id:String)
+GET /user/doctor/new                       controllers.UserController.createDoctor()
+POST /user/doctor/save                     controllers.UserController.saveDoctor()
+
 
 #Room Management
 GET   /room                                controllers.RoomController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")

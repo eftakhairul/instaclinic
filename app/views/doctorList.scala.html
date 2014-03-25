@@ -5,8 +5,12 @@
 
 
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
-@main("") {
-    <h1>Doctor List</h1>
+@main("Doctor List") {
+    <div class="span12 clear">
+        <a class="btn success" id="add" href="@routes.UserController.createDoctor()">Add a new Doctor</a>
+    </div>
+    <br>
+&nbsp;
 
     @if(total == 0) {
 
