@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
-public class Appointment extends Model 
-{
+public class Appointment extends Model {
 	@Id
 	private Long id;
 	
@@ -61,100 +60,74 @@ public class Appointment extends Model
         this.create_date = new Date();
     }
 	
-	public Appointment(Room room)
-	{
+	public Appointment(Room room) {
 		//this.schedule    = schedule;
 		this.room        = room;
         this.create_date = new Date();
 	}
 	
-	public Long getId()
-	{
-		return this.id;
+	public Long getId() {
+        return this.id;
 	}
 	
-	public Room getRoom()
-	{
-		return this.room;
+	public Room getRoom() {
+        return this.room;
 	}
 	
-	public void setRoom(Room room)
-	{
-		this.room = room;
+	public void setRoom(Room room) {
+        this.room = room;
 	}
 	
-	/*public Schedule getSchedule()
-	{
-		return this.schedule;
+	public User getUser() {
+        return this.user;
 	}
 	
-	public void setSchedule(Schedule schedule)
-	{
-		this.schedule = schedule;
-	}*/
-	
-	public User getUser()
-	{
-		return this.user;
-	}
-	
-	public void setUser(User user)
-	{
-		this.user = user;
+	public void setUser(User user) {
+        this.user = user;
 	}
 
     public Date getCreateDate() {
         return this.create_date;
     }
 	
-	public Payment getPayment()
-	{
-		return this.payment;
+	public Payment getPayment() {
+        return this.payment;
 	}
 
-	public void setPayment(Payment payment)
-	{
-		this.payment = payment;
+	public void setPayment(Payment payment) {
+        this.payment = payment;
 	}
 	
-	public Date getStartTime()
-	{
-		return this.startTime;
+	public Date getStartTime() {
+        return this.startTime;
 	}
 	
-	public void setStartTime(Date startTime)
-	{
-		this.startTime = startTime;
+	public void setStartTime(Date startTime) {
+        this.startTime = startTime;
 	}
 	
-	public Date getEndTime()
-	{
-		return this.endTime;
+	public Date getEndTime() {
+        return this.endTime;
 	}
 	
-	public void setEndTime(Date endTime)
-	{
-		this.endTime = endTime;
+	public void setEndTime(Date endTime) {
+        this.endTime = endTime;
 	}
 	
-	public Date getAppointmentDate()
-	{
-		return this.appointmentDate;
+	public Date getAppointmentDate() {
+        return this.appointmentDate;
 	}
 	
-	public void setAppointmentDate(Date appointmentDate)
-	{
-		this.appointmentDate = appointmentDate;
+	public void setAppointmentDate(Date appointmentDate) {
+        this.appointmentDate = appointmentDate;
 	}
 	
-	public void setMeetingType(MeetingType meetingType)
-	{
-		this.meetingType = meetingType;
+	public void setMeetingType(MeetingType meetingType) {
+        this.meetingType = meetingType;
 	}
 	
-	public MeetingType getMeetingType()
-	{
-		return this.meetingType;
+	public MeetingType getMeetingType() {
+        return this.meetingType;
 	}
 	
 	/**
