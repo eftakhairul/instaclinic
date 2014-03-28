@@ -51,7 +51,7 @@ public class ScheduleController extends Controller
 	  }
 	  
 	  if(user == null || user.getUserRole() == UserRole.PATIENT) {
-		  return redirect(routes.Authentication.login());
+		  return redirect(routes.AuthenticationController.login());
 	  }
 	  return ok(
           views.html.listSchedules.render(

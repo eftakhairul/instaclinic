@@ -23,10 +23,10 @@
 	    		<div class="navbar">          
 				    <div class="navbar-inner">
 				        <ul class="nav">
-				            <li><a href="@routes.Application.index()" title="InstaClinic Home">Home</a></li>
+				            <li><a href="@routes.ApplicationController.index()" title="InstaClinic Home">Home</a></li>
 				            @if(!session().contains("user_id")){
-				            <li><a href="@routes.Authentication.login()" title="Login">Login</a></li>
-				            <li><a href="@routes.Registration.index()" title="Login">Registration</a></li>
+				            <li><a href="@routes.AuthenticationController.login()" title="Login">Login</a></li>
+				            <li><a href="@routes.RegistrationController.index()" title="Login">Patient Registration</a></li>
 
 				            }else{
 					            @if(session().get("role") == "PATIENT") {
@@ -40,7 +40,7 @@
 					            	<li><a href="@routes.UserController.patientList()" title="Checkout">Patient List</a></li>
                                     <li><a href="@routes.UserController.doctorList()" title="Checkout">Doctor List</a></li>
 					            }
-					            <li><a href="@routes.Authentication.logout()" title="Logout">Logout</a></li>
+					            <li><a href="@routes.AuthenticationController.logout()" title="Logout">Logout</a></li>
 				            }
 				        </ul>
 				    </div>

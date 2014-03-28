@@ -47,7 +47,7 @@ public class PaymentController extends Controller {
             }
 
             flash("success", "Payment is done successfully.");
-            return redirect(routes.Application.index());
+            return redirect(routes.ApplicationController.index());
         }
     }
 }

@@ -9,7 +9,7 @@ import models.User;
 import models.UserRole;
 import views.html.*;
 
-public class Application extends Controller {
+public class ApplicationController extends Controller {
   
 	  public static Result index() 
 	  {

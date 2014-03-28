@@ -34,7 +34,7 @@ public class UserController extends Controller {
         User user = User.find.ref(Long.parseLong(id));
         session("role", user.getUserRole().name());
 
-        return redirect(routes.Application.index());
+        return redirect(routes.ApplicationController.index());
     }
 
     /**
@@ -105,6 +105,6 @@ public class UserController extends Controller {
         User user = User.find.ref(Long.parseLong(id));
         session("role", user.getUserRole().name());
 
-        return redirect(routes.Application.index());
+        return redirect(routes.ApplicationController.index());
     }
 }

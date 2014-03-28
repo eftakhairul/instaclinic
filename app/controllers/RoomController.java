@@ -34,7 +34,7 @@ public class RoomController extends Controller
 	  }
 
 	  if(user == null || user.getUserRole() == UserRole.PATIENT) {
-		  return redirect(routes.Authentication.login());
+		  return redirect(routes.AuthenticationController.login());
 	  }
 	  return ok(
           listRooms.render(Room.page(page, 10, sortBy, order, filter), sortBy, order, filter)

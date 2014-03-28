@@ -10,7 +10,7 @@ import java.util.List;
 
 import models.User;
 
-public class Authentication extends Controller {
+public class AuthenticationController extends Controller {
 
     public static User currentUser  = null;
     static Form<User> loginForm     = form(User.class);
@@ -43,7 +43,7 @@ public class Authentication extends Controller {
                 session().clear();
                 session("user_id", currentUser.getId().toString());
                 session("role", currentUser.getUserRole().name());
-                return redirect(routes.Application.index());
+                return redirect(routes.ApplicationController.index());
             } else {
                 filledForm.reject("password", "Password doesn't match, Please try again.");
             }
@@ -59,6 +59,6 @@ public class Authentication extends Controller {
     */
     public static Result logout() {
         session().clear();
-        return redirect(routes.Application.index());
+        return redirect(routes.ApplicationController.index());
     }
 }

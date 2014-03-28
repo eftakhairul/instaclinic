@@ -13,7 +13,7 @@ import play.data.Form;
 import play.mvc.*;
 import views.html.registration.*;
 
-public class Registration extends Controller {
+public class RegistrationController extends Controller {
 
     static Form<User> RegistrationFrom  = form(User.class);
 
@@ -95,7 +95,7 @@ public class Registration extends Controller {
             }
 
             flash("success", "Registration is successful.");
-            return redirect(routes.Authentication.login());
+            return redirect(routes.AuthenticationController.login());
         }
     }
 }

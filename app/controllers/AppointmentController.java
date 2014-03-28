@@ -43,7 +43,7 @@ public class AppointmentController extends Controller
 		  user = User.findById(Long.parseLong(session("user_id")));
 	  }
 	  if(user == null || user.getUserRole() == UserRole.DOCTOR) {
-		  return redirect(routes.Authentication.login());
+		  return redirect(routes.AuthenticationController.login());
 	  }
       return ok(
           views.html.listAppointments.render(
