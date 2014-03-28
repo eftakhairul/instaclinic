@@ -1,20 +1,13 @@
 package models;
 
-import play.data.format.Formats;
-import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import javax.persistence.Entity;
-
 import javax.persistence.*;
 import java.util.Date;
 
 
 @Entity
 public class Configuration extends Model {
-
-    public Long getId() {
-        return id;
-    }
 
     @Id
     private Long id;
@@ -27,6 +20,10 @@ public class Configuration extends Model {
 
     public Configuration() {
         this.create_date = new Date();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getLong_meet() {
