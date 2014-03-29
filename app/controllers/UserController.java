@@ -74,7 +74,11 @@ public class UserController extends Controller {
 
         // Check if the username is valid
         if(!filledForm.hasErrors()) {
-            if(filledForm.get().getUsername().equals("admin") || filledForm.get().getUsername().equals("guest")) {
+            if(filledForm.get().getUsername().equals("admin")
+               || filledForm.get().getUsername().equals("guest")
+               || User.checkUserNameAvilability(filledForm.get().getUsername())) {
+
+                flash("error", "This username is already taken");
                 filledForm.reject("username", "This username is already taken");
             }
         }
