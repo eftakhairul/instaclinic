@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import com.avaje.ebean.Ebean;
 
 import com.avaje.ebean.Page;
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
 
@@ -18,11 +19,21 @@ public class Room extends Model
 	@Id
 	@GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	private int id;
+
+    @Constraints.Required
+    private String roomName;
 	
-	public int getId()
-	{
+	public int getId() {
 		return id;
 	}
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
 	
 	public static Finder<Long,Room> find = new Finder<Long,Room>(Long.class, Room.class); 
 	
@@ -55,6 +66,6 @@ public class Room extends Model
      * Return toString
      */
     public String toString() {
-        return id + "";
+        return this.roomName + "";
     }
 }

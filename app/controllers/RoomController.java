@@ -42,7 +42,9 @@ public class RoomController extends Controller
   }
 
   /**
-   * Display the 'new computer form'.
+   * Add Room to System
+   *
+   * @route /room/new
    */
   public static Result create() {
       Form<Room> roomForm = form(Room.class);
@@ -51,7 +53,9 @@ public class RoomController extends Controller
   }
 
   /**
-   * Handle the 'new computer form' submission
+   * Process the form
+   *
+   * @route /room/save
    */
   public static Result save() {
       Form<Room> roomForm = form(Room.class).bindFromRequest();
@@ -68,6 +72,8 @@ public class RoomController extends Controller
   
   /**
    * Delete room
+   *
+   * @route /room/:id/delete
    */
   public static Result delete(Long id) {
 	  Room room  = Room.find.ref(id);
