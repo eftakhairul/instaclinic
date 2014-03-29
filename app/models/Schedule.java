@@ -144,28 +144,12 @@ public class Schedule extends Model
         return Ebean.find(Schedule.class, id);
     }
     
-    public static Map<String,String> findByType(MeetingType type) {
+    public static Map<String,String> findByType(MeetingType type, Date date) {
     	List<Schedule> schedules = find
-        		.orderBy("startTime")
-        		.findList();
-    	LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
-        int interval = (type == MeetingType.REGULAR)?20:60;
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-    	for(Schedule c: schedules) {
-        	//if(!Appointment.findBySchedule(c)) {
-    		Date start = c.startTime;
-    		Date end   = c.endTime;
-    		int i = 0;
-    		while(start.getTime() < end.getTime()) {
-    			String option = formatter.format(c.startTime) + "-" + formatter.format(new Date(c.startTime.getTime()+(interval*60000)));
-    			options.put(option, option);
-    			c.startTime.setTime(c.startTime.getTime()+(interval*60000));
-    			i++;
-    		}
-        		//options.put(c.toString(), new SimpleDateFormat("MM/dd/yyyy").format(c.scheduleDate) + "-" + formatter.format(c.startTime) + "-" + formatter.format(c.endTime));
-        	//}
-        }
-        return options;
+    								.where().eq("scheduleDate", date)	
+        							.orderBy("startTime")
+        							.findList();
+    	 return getFormattedList(type, schedules);
     }
     
     public static Map<String,String> findByDoctor(User user) {
@@ -181,17 +165,37 @@ public class Schedule extends Model
         return options;
     }
     
-    public static Map<String,String> findByDoctorAndType(User user, MeetingType type) {
+    public static Map<String,String> findByDoctorAndType(User user, MeetingType type, Date date) {
     	List<Schedule> schedules = find.where()
-        		.eq("user", user).eq("meetingType", type)
+        		.eq("user", user)
+        		.eq("scheduleDate", date)
         		.findList();
+    	System.out.println(schedules.size()+" schedules found");
+        return getFormattedList(type, schedules);
+    }
+    
+    
+    public static Map<String,String> getFormattedList(MeetingType type, List<Schedule> schedules)
+    {
     	LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
-        for(Schedule c: schedules) {
-        	if(!Appointment.findBySchedule(c)) {
-        		options.put(c.toString(), new SimpleDateFormat("MM/dd/yy HH:mm").format(c.startTime) + " To " +new SimpleDateFormat("MM/dd/yy HH:mm").format(c.endTime));
-        	}
+        int interval = (type == MeetingType.REGULAR)?20:60;
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+    	
+    	for(Schedule c: schedules) {
+        	//if(!Appointment.findBySchedule(c)) {
+    		Date start = c.startTime;
+    		Date end   = c.endTime;
+    		while(start.getTime() < end.getTime()) {
+    			String option = formatter.format(c.startTime) + "-" + formatter.format(new Date(c.startTime.getTime()+(interval*60000)));
+    			String key    = c.getUser().getId()+"-"+new SimpleDateFormat("MM/dd/yyyy").format(c.getScheduleDate())+"-"+option;
+    			options.put(key, option);
+    			c.startTime.setTime(c.startTime.getTime()+(interval*60000));
+    		}
+        		//options.put(c.toString(), new SimpleDateFormat("MM/dd/yyyy").format(c.scheduleDate) + "-" + formatter.format(c.startTime) + "-" + formatter.format(c.endTime));
+        	//}
         }
-        return options;
+    	
+    	return options;
     }
     
     /**

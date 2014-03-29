@@ -46,7 +46,7 @@ POST    /appointments/:id                 controllers.AppointmentController.upda
 # Delete an appointment
 
 GET    /appointments/:id/delete            controllers.AppointmentController.delete(id:Long)
-GET     /appointments/filter/:meetingType  controllers.AppointmentController.getFilteredSchedules(meetingType: String, doctorId:Int ?= 0)
+GET     /appointments/filter/:meetingType  controllers.AppointmentController.getFilteredSchedules(meetingType: String, doctorId:Int ?= 0, date ?= "")
 
 #Checkout and Payment
 GET    /cart                               controllers.PaymentController.index()

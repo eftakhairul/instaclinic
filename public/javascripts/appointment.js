@@ -21,7 +21,7 @@ function filterByMeeting(meetingType) {
 	
 	setDoctorVisibility(meetingType);
 	
-	$.get("filter/"+meetingType, function(data){
+	$.get("filter/"+meetingType+"?date="+encodeURIComponent($("#appointmentDate").val()), function(data){
 		showSchedules(data);
 	});
 }
@@ -37,7 +37,7 @@ function setDoctorVisibility(meetingType)
 }
 
 function filterByDoctor(doctorId) {
-	$.get("filter/"+$("#meetingType").val()+"?doctorId="+doctorId, function(data){
+	$.get("filter/"+$("#meetingType").val()+"?doctorId="+doctorId+"&date="+encodeURIComponent($("#appointmentDate").val()), function(data){
 		showSchedules(data);
 	});
 }
@@ -76,7 +76,8 @@ function formatValue(value) {
 
 function setStartEnd(time) {
 	var parts = time.split("-");
-	$("#startTime").val(parts[0]);
-	$("#endTime").val(parts[1]);
+	$("#startTime").val(parts[2]);
+	$("#endTime").val(parts[3]);
+	$("#doctor").val(parts[0]);
 	//alert(parts[1] + " " + parts[2] + " "+time);
 }

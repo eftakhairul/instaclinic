@@ -180,16 +180,18 @@ public class AppointmentController extends Controller
       return GO_HOME;
   }
   
-  public static Result getFilteredSchedules(String meetingType, int doctorId)
+  public static Result getFilteredSchedules(String meetingType, int doctorId,String date)
   {
 	  Map<String,String> result;
+	  Date filterDate = new Date(date);
 	  if(doctorId != 0){
-		  result = Schedule.findByDoctorAndType(User.findById((long)(doctorId)), MeetingType.valueOf(meetingType));  
+		  result = Schedule.findByDoctorAndType(User.findById((long)(doctorId)), MeetingType.valueOf(meetingType), filterDate);  
 	  }
 	  else {
-		  result = Schedule.findByType(MeetingType.valueOf(meetingType));  
+	  //System.out.println(meetingType);
+		  result = Schedule.findByType(MeetingType.valueOf(meetingType), filterDate);  
 	  }
-	  StringWriter out = new StringWriter();
+	  //StringWriter out = new StringWriter();
 	  String jsonText = Json.toJson(result).toString();
 	  return ok(jsonText);
   }
