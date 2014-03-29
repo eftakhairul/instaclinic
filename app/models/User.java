@@ -114,4 +114,23 @@ public class User extends Model{
     public static int findCountByUserRole(UserRole role) {
         return find.where().eq("userRole", role).findRowCount();
     }
+
+    /**
+     * Return the user by username
+     * @param String userName
+     * return User
+     */
+    public static User findByUserName(String userName) {
+        return find.where().eq("username", userName).findUnique();
+    }
+
+
+    /**
+     * Check weather username available or not
+     * @param String userName
+     * return User
+     */
+    public static boolean checkUserNameAvilability(String userName) {
+        return (findByUserName(userName) != null)? true:false;
+    }
 }
