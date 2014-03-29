@@ -9,6 +9,9 @@
     @form(routes.UserController.saveDoctor) {
         <fieldset>
             @inputText(RegistrationFrom("username"), '_label -> "Username")
+        </fieldset>
+        <fieldset>
+
             @inputPassword(RegistrationFrom("password"),
             '_label -> "Password",
             '_help -> "A password must be at least 6 characters. "

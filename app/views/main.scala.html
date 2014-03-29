@@ -39,6 +39,7 @@
 					            @if(session().get("role") == "ADMIN") {
 					            	<li><a href="@routes.UserController.patientList()" title="Checkout">Patient List</a></li>
                                     <li><a href="@routes.UserController.doctorList()" title="Checkout">Doctor List</a></li>
+                                    <li><a href="@routes.UserController.createDoctor()" title="Checkout">Create Doctor</a></li>
 					            }
 					            <li><a href="@routes.AuthenticationController.logout()" title="Logout">Logout</a></li>
 				            }

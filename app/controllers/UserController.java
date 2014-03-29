@@ -85,7 +85,7 @@ public class UserController extends Controller {
         } else {
             User newUser = filledForm.get();
             newUser.setPassword(newUser.getPassword());
-            newUser.setUserRole(UserRole.ADMIN);
+            newUser.setUserRole(UserRole.DOCTOR);
             Ebean.save(newUser);
 
             flash("success", "Doctor has been added successful.");
