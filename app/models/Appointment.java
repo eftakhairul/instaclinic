@@ -48,6 +48,12 @@ public class Appointment extends Model {
 	@PrimaryKeyJoinColumn
 	private User user;
 	
+	//The doctor
+	@ManyToOne(cascade=CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private User doctor;
+	
+	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "payment_id")
 	private Payment payment;
@@ -58,6 +64,7 @@ public class Appointment extends Model {
 
     public Appointment() {
         this.create_date = new Date();
+        this.doctor      = new User();
     }
 	
 	public Appointment(Room room) {
@@ -83,6 +90,20 @@ public class Appointment extends Model {
 	}
 	
 	public void setUser(User user) {
+		if(user.getUserRole() != UserRole.PATIENT) {
+			return;
+		}
+        this.user = user;
+	}
+	
+	public User getDoctor() {
+        return this.user;
+	}
+	
+	public void setDoctor(User user) {
+		if(user.getUserRole() != UserRole.DOCTOR) {
+			//return;
+		}
         this.user = user;
 	}
 

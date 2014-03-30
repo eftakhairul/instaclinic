@@ -1,6 +1,7 @@
 @(id: Long, appointmentForm: Form[Appointment], appointment:Appointment)
 
 @import helper._
+@import java.text.SimpleDateFormat;
 
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
     
@@ -8,15 +9,19 @@
 <script src="@routes.Assets.at("javascripts/appointment.js")" type="text/javascript"></script>
     @form(routes.AppointmentController.update(id)) {
         <fieldset>
-            @select(appointmentForm("schedule.meetingType"), 
+            @inputText(appointmentForm("appointmentDate"), '_label -> "Appointment Date")		
+            @select(appointmentForm("meetingType"), 
             	models.MeetingType.values.toList.map(v => (v.toString, Messages(v.toString()))), 
-            		'_label -> "Meeting Type", 'id -> "meetingType")
-            @select(appointmentForm("schedule.user.id"), 
+            		'_label -> "Meeting Type")            
+            @select(appointmentForm("doctor_id"), 
             		options(User.findByUserRole(UserRole.DOCTOR)), 
-            		'_label -> "Select Doctor", 'id -> "doctor")
-            @select(appointmentForm("schedule.id"), 
-            		options(Schedule.findByType(appointment.getMeetingType(), new Date())), 
-            		'_label -> "Select Schedule", 'id -> "schedule")		
+            		'_label -> "Select Doctor")
+            @select(appointmentForm("schedule"), 
+            		options(Schedule.findByType(MeetingType.REGULAR, new Date())), 
+            		'_label -> "Select Time")		
+            <input type="hidden" id="startTime" name="startTime" value="@{new SimpleDateFormat("HH:mm").format(appointmentForm.get().getStartTime())}" />
+            <input type="hidden" id="endTime" name="endTime" value="@{new SimpleDateFormat("HH:mm").format(appointmentForm.get().getEndTime())}" />
+            <input type="hidden" id="id" name="id" value="@appointmentForm.get().getId()" />				
         </fieldset>
         
         <div class="actions">

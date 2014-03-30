@@ -14,12 +14,12 @@
             @select(appointmentForm("meetingType"), 
             	models.MeetingType.values.toList.map(v => (v.toString, Messages(v.toString()))), 
             		'_label -> "Meeting Type")            
-            @select(appointmentForm("doctor"), 
+            @select(appointmentForm("doctor_id"), 
             		options(User.findByUserRole(UserRole.DOCTOR)), 
             		'_label -> "Select Doctor")
             @select(appointmentForm("schedule"), 
             		options(Schedule.findByType(MeetingType.REGULAR, new Date())), 
-            		'_label -> "Select Time")
+            		'_label -> "Select Time")		
             <input type="hidden" id="startTime" name="startTime" value="" />
             <input type="hidden" id="endTime" name="endTime" value="" />
             				

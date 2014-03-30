@@ -75,13 +75,22 @@ public class AppointmentController extends Controller
    */
   public static Result update(Long id) {
   
-      Form<Appointment> appointmentForm = form(Appointment.class).bindFromRequest();
-      int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
-      Schedule schedule = Schedule.findById(scheduleId);
+      Form<Appointment> appointmentForm = form(Appointment.class).fill(Appointment.find.byId(id)).bindFromRequest();
+      //int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
+      //Schedule schedule = Schedule.findById(scheduleId);
       
+      if(appointmentForm.hasErrors()) {
+    	  flash("error", appointmentForm.errors().toString());
+          return badRequest(views.html.createAppointment.render(appointmentForm));
+      }
+      Appointment formAp = appointmentForm.get();
       Appointment appointment = Appointment.find.byId(id);
       //appointment.setSchedule(schedule);
       //set start/end time
+      appointment.setAppointmentDate(formAp.getAppointmentDate());
+      appointment.setStartTime(formAp.getStartTime());
+      appointment.setEndTime(formAp.getEndTime());
+      //appointment.setDoctor(formAp.getDoctor());
       
       Room room = appointment.findAvailableRoom();
       if(room == null) {
@@ -91,7 +100,7 @@ public class AppointmentController extends Controller
       appointment.setRoom(room);
       
       User user = User.findById(Long.parseLong(session().get("user_id")));
-      List<Appointment> appointments = Appointment.findByTime(schedule.getStartTime(), schedule.getEndTime());
+      List<Appointment> appointments = Appointment.findByTime(appointment.getStartTime(), appointment.getEndTime());
       
       for (Appointment appointment2 : appointments) {
 		if(appointment2.getUser().getId() == user.getId()) {
@@ -99,8 +108,8 @@ public class AppointmentController extends Controller
 	    	return badRequest(views.html.editAppointment.render(id, appointmentForm, appointment));
 		}
       }
-      
-      appointment.update();
+      //Ebean.update(appointment);
+      appointment.update(id);
       
       flash("success", "Appointment has been updated");
       return GO_HOME;
@@ -123,6 +132,11 @@ public class AppointmentController extends Controller
       Form<Appointment> appointmentForm = form(Appointment.class).bindFromRequest();
       //int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
       //Schedule schedule = Schedule.findById(scheduleId);
+      
+      if(appointmentForm.hasErrors()) {
+    	  flash("error", appointmentForm.errors().toString());
+          return badRequest(views.html.createAppointment.render(appointmentForm));
+      }
       
       Appointment appointment = appointmentForm.get();
       

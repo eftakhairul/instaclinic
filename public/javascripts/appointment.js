@@ -3,7 +3,7 @@ $(document).ready(function(){
 	$("#meetingType").change(function(){
 		filterByMeeting($(this).val());
 	});
-	$("#doctor").change(function(){
+	$("#doctor_id").change(function(){
 		filterByDoctor($(this).val());
 	});
 	
@@ -15,7 +15,22 @@ $(document).ready(function(){
 		setStartEnd($(this).val());
 	});
 	
+	$("#appointmentDate").change(function(){
+		updateScheduleFilter();
+	});
+	updateScheduleFilter();
 });
+
+function updateScheduleFilter()
+{
+	if($("#meetingType").val() == "REGULAR") {
+		filterByMeeting($("#meetingType").val());
+	}
+	else {
+		filterByMeeting($("#doctor_id").val());
+	}
+}
+
 
 function filterByMeeting(meetingType) {
 	
@@ -58,6 +73,7 @@ function showSchedules(data)
 		//group.append(option);
 		$("#schedule").append(option);
 	});
+	setStartEnd($("#schedule").val());
 }
 
 function getIntValue(time) {
@@ -78,6 +94,6 @@ function setStartEnd(time) {
 	var parts = time.split("-");
 	$("#startTime").val(parts[2]);
 	$("#endTime").val(parts[3]);
-	$("#doctor").val(parts[0]);
+	$("#doctor_id").val(parts[0]);
 	//alert(parts[1] + " " + parts[2] + " "+time);
 }
