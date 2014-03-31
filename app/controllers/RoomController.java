@@ -15,7 +15,7 @@ public class RoomController extends Controller
 	 * This result directly redirect to application home.
 	 */
 	public static Result GO_HOME = redirect(
-	    routes.ScheduleController.list(0, "name", "asc", "")
+	    routes.RoomController.list(0, "name", "asc", "")
 	);
 
 
