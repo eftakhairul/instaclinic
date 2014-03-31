@@ -2,7 +2,9 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 
+import models.Configuration;
 import play.api.libs.Crypto;
+import play.data.Form;
 import play.mvc.*;
 import models.Room;
 import models.User;
@@ -21,6 +23,29 @@ public class ApplicationController extends Controller {
 		}
 	    return ok(index.render("Your new application is ready."));
 	  }
+
+    /**
+     * Add Room to System
+     *
+     * @route /configure
+     */
+    public static Result newConfigure() {
+        Form<Configuration> configurationForm = form(Configuration.class);
+        return ok(createConfigure.render(configurationForm)
+        );
+    }
+
+
+    /**
+     * Add Room to System
+     *
+     * @route /configure/save
+     */
+    public static Result newConfigure() {
+        Form<Configuration> configurationForm = form(Configuration.class);
+        return ok(createConfigure.render(configurationForm)
+        );
+    }
 
 
     public static Result testData()

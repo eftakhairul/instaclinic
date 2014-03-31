@@ -1,0 +1,20 @@
+@(configurationForm: Form[Configuration])
+@import helper._
+@import models._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+@main("Set Configuration") {
+	<script src="@routes.Assets.at("javascripts/schedule.js")" type="text/javascript"></script>      
+    @form(routes.ApplicatonController.saveConfiguration()) {
+        <fieldset>
+            @inputText(configurationForm("long_meet"), '_label -> "Long Consulting Time")
+            @inputText(configurationForm("short_meet"), '_label -> "Short Consulting Time")
+        </fieldset>
+
+        
+        <div class="actions">
+            <input type="submit" value="Update" class="btn primary"> or
+            <a href="@routes.RoomController.list()" class="btn">Cancel</a>
+        </div>       
+    }   
+}
