@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import akka.dispatch.Foreach;
+
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.annotation.EnumMapping;
@@ -170,7 +172,7 @@ public class Schedule extends Model
         		.eq("user", user)
         		.eq("scheduleDate", date)
         		.findList();
-    	System.out.println(schedules.size()+" schedules found");
+    	//System.out.println(schedules.size()+" schedules found");
         return getFormattedList(type, schedules);
     }
     
@@ -178,21 +180,35 @@ public class Schedule extends Model
     public static Map<String,String> getFormattedList(MeetingType type, List<Schedule> schedules)
     {
     	LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
-        int interval = (type == MeetingType.REGULAR)?20:60;
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        
+    	int interval = (type == MeetingType.REGULAR)?20:60;
+        
+    	SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
     	
     	for(Schedule c: schedules) {
-        	//if(!Appointment.findBySchedule(c)) {
     		Date start = c.startTime;
     		Date end   = c.endTime;
-    		while(start.getTime() < end.getTime()) {
-    			String option = formatter.format(c.startTime) + "-" + formatter.format(new Date(c.startTime.getTime()+(interval*60000)));
-    			String key    = c.getUser().getId()+"-"+new SimpleDateFormat("MM/dd/yyyy").format(c.getScheduleDate())+"-"+option;
-    			options.put(key, option);
-    			c.startTime.setTime(c.startTime.getTime()+(interval*60000));
-    		}
-        		//options.put(c.toString(), new SimpleDateFormat("MM/dd/yyyy").format(c.scheduleDate) + "-" + formatter.format(c.startTime) + "-" + formatter.format(c.endTime));
-        	//}
+	    		while(start.getTime() < end.getTime()) {
+	    			List<Appointment> appnts = Appointment.findByTime(start, new Date(c.startTime.getTime()+(interval*60000)));
+	        		boolean skip = false;
+	    			if(appnts.size() >0) {
+	    				//System.out.println("Appointment Found : "+appnts.size());
+	        			for (Appointment appointment : appnts) {
+	        				//System.out.println("User ids : "+appointment.getDoctor().getId()+" "+c.getUser().getId());
+	        				if(appointment.getDoctor().getId() == c.getUser().getId()) {
+	        					skip = true;
+							}
+						}
+	        		}
+	        		
+	    			if(!skip) {
+		    			String option = formatter.format(c.startTime) + "-" + formatter.format(new Date(c.startTime.getTime()+(interval*60000)));
+		    			String key    = c.getUser().getId()+"-"+new SimpleDateFormat("MM/dd/yyyy").format(c.getScheduleDate())+"-"+option;
+		    			options.put(key, option);
+	    			}
+	        		start.setTime(start.getTime()+(interval*60000));
+	    		}
+        		//options.put(c.toString(), new SimpleDateFormat("MM/dd/yyyy").format(c.scheduleDate) + "-" + formatter.format(c.startTime) + "-" + formatter.format(c.endTime)); 	
         }
     	
     	return options;
