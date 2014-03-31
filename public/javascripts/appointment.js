@@ -23,11 +23,14 @@ $(document).ready(function(){
 
 function updateScheduleFilter()
 {
+	if($("#appointmentDate").val() == "") {
+		return;
+	}
 	if($("#meetingType").val() == "REGULAR") {
 		filterByMeeting($("#meetingType").val());
 	}
 	else {
-		filterByMeeting($("#doctor_id").val());
+		filterByDoctor($("#doctor_id").val());
 	}
 }
 

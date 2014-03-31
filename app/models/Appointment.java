@@ -206,7 +206,7 @@ public class Appointment extends Model {
     	List<Appointment> appointments = findByTime(this.getStartTime(), this.getEndTime());
     	
     	for (Room room : rooms) {
-    		System.out.println("Checking for room "+room.getId());
+    		//System.out.println("Checking for room "+room.getId());
 			if(isRoomAvailable(room, appointments)) {
 				return room;
 			}
@@ -216,14 +216,14 @@ public class Appointment extends Model {
     
     public static boolean isRoomAvailable(Room room, List<Appointment> appointments)
     {
-    	System.out.println("Number of Appointment in that time frame: "+appointments.size());
+    	//System.out.println("Number of Appointment in that time frame: "+appointments.size());
     	for (Appointment appointment : appointments) {
 			if(appointment.getRoom().getId() == room.getId()) {
-				System.out.println("Room not available "+room.getId());
+				//System.out.println("Room not available "+room.getId());
 				return false;
 			}
 		}
-    	System.out.println("Room available : "+room.getId());
+    	//System.out.println("Room available : "+room.getId());
     	return true;
     }
     
