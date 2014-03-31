@@ -28,16 +28,7 @@ public class ApplicationController extends Controller {
      * @route /configure
      */
     public static Result configureSetting() {
-        Long id = Long.parseLong("1");
-
-        if(Configuration.find.byId(id) == null) {
-            Configuration configuration = new Configuration();
-            configuration.setLong_meet("60");
-            configuration.setShort_meet("20");
-            Ebean.save(configuration);
-        }
-
-        return ok(listConfigurationSetting.render(Configuration.find.byId(id)));
+        return ok(listConfigurationSetting.render(Configuration.getConfiguration()));
     }
 
 
@@ -47,17 +38,7 @@ public class ApplicationController extends Controller {
      * @route /configure/edit
      */
     public static Result editConfiguration() {
-        Long id = Long.parseLong("1");
-
-        if(Configuration.find.byId(id) == null) {
-            Configuration configuration = new Configuration();
-            configuration.setLong_meet("60");
-            configuration.setShort_meet("20");
-            Ebean.save(configuration);
-        }
-
-        Form<Configuration> configurationForm = form(Configuration.class).fill(Configuration.find.byId(id));
-
+        Form<Configuration> configurationForm = form(Configuration.class).fill(Configuration.getConfiguration());
         return ok(views.html.editConfigure.render(configurationForm));
     }
 
@@ -74,7 +55,7 @@ public class ApplicationController extends Controller {
 
         Configuration filledConfiguration = configurationForm.get();
         if(filledConfiguration != null) {
-            Configuration configuration = Configuration.find.byId(Long.parseLong("1"));
+            Configuration configuration = Configuration.getConfiguration();
             configuration.setLong_meet(filledConfiguration.getLong_meet());
             configuration.setShort_meet(filledConfiguration.getShort_meet());
             System.out.println(configuration.getId());

@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.Ebean;
 import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.*;
@@ -54,4 +55,21 @@ public class Configuration extends Model {
      * Generic query helper for entity Configuration with id Long
      */
     public static Finder<Long, Configuration> find = new Finder<Long,Configuration>(Long.class, Configuration.class);
+
+    public static Configuration getConfiguration()  {
+        Long id = Long.parseLong("1");
+
+        Configuration configuration  = find.byId(id);
+
+        if(configuration == null) {
+            configuration = new Configuration();
+            configuration.setLong_meet("60");
+            configuration.setShort_meet("20");
+            configuration.save();
+
+            return configuration;
+        }
+
+        return configuration;
+    }
 }
