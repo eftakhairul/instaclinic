@@ -181,7 +181,7 @@ public class Schedule extends Model
     {
     	LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
         
-    	int interval = (type == MeetingType.REGULAR)?20:60;
+    	int interval = (type == MeetingType.REGULAR)?Integer.parseInt(Configuration.getConfiguration().getShort_meet()):Integer.parseInt(Configuration.getConfiguration().getLong_meet());
         
     	SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
     	
