@@ -1,0 +1,60 @@
+@(configuration: Configuration)
+
+@import helper._
+@import models._
+
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+@main("Configuration Setting") {
+    <div class="span12">
+        <a class="btn success" id="add" href="@routes.ApplicationController.editConfiguration()">Edit Setting</a>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div class="span12 clear">
+        <table class="computers zebra-striped">
+            <thead>
+            <tr>
+                <td>
+                    Type
+                </td>
+                <td>
+                    Time in Mins
+                </td>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>Long Appointment</td>
+                <td>@configuration.getLong_meet()</td>
+            </tr>
+
+            <tr>
+                <td>Short Appointment</td>
+                <td>@configuration.getShort_meet()</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="actions span9 clear">
+        <a href="@routes.ApplicationController.index()" class="btn">Go Back</a>
+    </div>
+}
+<script src="@routes.Assets.at("javascripts/cart.js")" type="text/javascript"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

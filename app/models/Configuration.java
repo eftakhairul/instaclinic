@@ -49,4 +49,9 @@ public class Configuration extends Model {
     public void setCreate_date(Date create_date) {
         this.create_date = create_date;
     }
+
+    /**
+     * Generic query helper for entity Configuration with id Long
+     */
+    public static Finder<Long, Configuration> find = new Finder<Long,Configuration>(Long.class, Configuration.class);
 }
