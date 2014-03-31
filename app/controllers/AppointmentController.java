@@ -84,6 +84,7 @@ public class AppointmentController extends Controller
           return badRequest(views.html.createAppointment.render(appointmentForm));
       }
       Appointment formAp = appointmentForm.get();
+      System.out.println("Appointment ID From Form: "+formAp.getId());
       Appointment appointment = Appointment.find.byId(id);
       //appointment.setSchedule(schedule);
       //set start/end time
@@ -108,8 +109,8 @@ public class AppointmentController extends Controller
 	    	return badRequest(views.html.editAppointment.render(id, appointmentForm, appointment));
 		}
       }
-      //Ebean.update(appointment);
-      appointment.update(id);
+      Ebean.update(appointment);
+      //appointment.update(id);
       
       flash("success", "Appointment has been updated");
       return GO_HOME;
