@@ -24,9 +24,9 @@ public class AppointmentController extends Controller
 	   routes.AppointmentController.list(0, "name", "asc", "")
 	);
     
-  public static Result index() 
-  {
-	return GO_HOME;
+  public static Result index() {
+
+      return GO_HOME;
   }
   
   /**

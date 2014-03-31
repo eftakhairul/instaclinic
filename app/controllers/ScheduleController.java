@@ -161,34 +161,12 @@ public class ScheduleController extends Controller
     	  flash("error", "endTime cannot be previous time then start time");
     	  return false;
       }
-      
-      /*long timeDiff = (schedule.getEndTime().getTime() - schedule.getStartTime().getTime())/60000;
-      
-      if(timeDiff == 20) {
-    	  schedule.setMeetingType(MeetingType.REGULAR);
-      }
-      else if(timeDiff == 60) {
-    	  schedule.setMeetingType(MeetingType.YEARLY);
-      }
-      else {
-    	  flash("error", "schedule must be 20 minutes or 60 minutes in length");
-          return false;
-      }*/
+
       
       if(Calendar.getInstance().after(schedule.getScheduleDate())) {
     	  flash("error", "Time cannot be in past time");
     	  return false;
       }
-      
-      /*if(schedule.getStartTime().getHours() < 8) {
-    	  flash("error", "Office time starts at 8:00 AM");
-    	  return false;
-      }
-      
-      if(schedule.getEndTime().getHours() > 17) {
-    	  flash("error", "Office time ends at 5:00 PM");
-    	  return false;
-      }*/
       
       User user = User.findById(Long.parseLong(session("user_id")));
       
