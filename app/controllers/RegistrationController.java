@@ -35,13 +35,6 @@ public class RegistrationController extends Controller {
         Form<User> filledForm        = RegistrationFrom.bindFromRequest();
         DynamicForm nonModelFormData = form().bindFromRequest();
 
-        /*
-        // Check accept conditions
-        if(!"true".equals(filledForm.field("accept").value())) {
-            filledForm.reject("accept", "You must accept the terms and conditions");
-        }
-        */
-
         // Check repeated password
         if(!filledForm.field("password").valueOr("").isEmpty()) {
             if(!filledForm.field("password").valueOr("").equals(filledForm.field("repeatPassword").value())) {
