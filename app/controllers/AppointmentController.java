@@ -76,8 +76,6 @@ public class AppointmentController extends Controller
   public static Result update(Long id) {
   
       Form<Appointment> appointmentForm = form(Appointment.class).fill(Appointment.find.byId(id)).bindFromRequest();
-      //int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
-      //Schedule schedule = Schedule.findById(scheduleId);
       
       if(appointmentForm.hasErrors()) {
     	  flash("error", appointmentForm.errors().toString());
@@ -86,12 +84,10 @@ public class AppointmentController extends Controller
       Appointment formAp = appointmentForm.get();
       System.out.println("Appointment ID From Form: "+formAp.getId());
       Appointment appointment = Appointment.find.byId(id);
-      //appointment.setSchedule(schedule);
-      //set start/end time
       appointment.setAppointmentDate(formAp.getAppointmentDate());
       appointment.setStartTime(formAp.getStartTime());
       appointment.setEndTime(formAp.getEndTime());
-      //appointment.setDoctor(formAp.getDoctor());
+
       
       Room room = appointment.findAvailableRoom();
       if(room == null) {
@@ -110,8 +106,6 @@ public class AppointmentController extends Controller
 		}
       }
       Ebean.update(appointment);
-      //appointment.update(id);
-      
       flash("success", "Appointment has been updated");
       return GO_HOME;
   }
@@ -121,9 +115,7 @@ public class AppointmentController extends Controller
    */
   public static Result create() {
       Form<Appointment> appointmentForm = form(Appointment.class);
-      return ok(
-    		  views.html.createAppointment.render(appointmentForm)
-      );
+      return ok( views.html.createAppointment.render(appointmentForm));
   }
   
   /**
@@ -131,8 +123,6 @@ public class AppointmentController extends Controller
    */
   public static Result save() {
       Form<Appointment> appointmentForm = form(Appointment.class).bindFromRequest();
-      //int scheduleId = Integer.parseInt(appointmentForm.field("schedule").value());
-      //Schedule schedule = Schedule.findById(scheduleId);
       
       if(appointmentForm.hasErrors()) {
     	  flash("error", appointmentForm.errors().toString());
@@ -144,13 +134,6 @@ public class AppointmentController extends Controller
       User doctor = User.findById(Long.parseLong(appointmentForm.field("doctor_id").value()));
       appointment.setDoctor(doctor);
       
-      //Appointment appointment = new Appointment(new Room());
-      
-      //appointment.setAppointmentDate(new Date(appointmentForm.field("appointmentDate").value()));
-      
-      //String parts = appointmentForm.field("appointmentTime").value();
-      //appointment.setAppointmentDate(new Date(appointmentForm.field("appointmentDate").value()));
-      
       //TODO check room availability
       Room room = appointment.findAvailableRoom();
       if(room == null) {
@@ -158,7 +141,7 @@ public class AppointmentController extends Controller
     	  return badRequest(views.html.createAppointment.render(appointmentForm));
       }
       appointment.setRoom(room);
-      //System.out.println("room : "+room.getId());
+
       
       User user = User.findById(Long.parseLong(session().get("user_id")));
       
@@ -172,18 +155,9 @@ public class AppointmentController extends Controller
       }
       
       appointment.setUser(user);
-      //System.out.println("User : "+user.getUsername());
-      
       appointment.save();
       
       System.out.println("New Appointment created : "+appointment.getId());
-      
-      //System.out.print(scheduleId);
-      /*if(appointmentForm.hasErrors()) {
-    	  //flash("error", scheduleForm.errorsAsJson());
-          return badRequest(views.html.createAppointment.render(appointmentForm));
-      }
-      appointmentForm.get().save();*/
       
       flash("success", "Appointment has been created successfully");
       return GO_HOME;
@@ -202,14 +176,12 @@ public class AppointmentController extends Controller
   {
 	  Map<String,String> result;
 	  Date filterDate = new Date(date);
-	  if(doctorId != 0){
+	  if(doctorId != 0) {
 		  result = Schedule.findByDoctorAndType(User.findById((long)(doctorId)), MeetingType.valueOf(meetingType), filterDate);  
-	  }
-	  else {
-	  //System.out.println(meetingType);
+	  } else {
 		  result = Schedule.findByType(MeetingType.valueOf(meetingType), filterDate);  
 	  }
-	  //StringWriter out = new StringWriter();
+
 	  String jsonText = Json.toJson(result).toString();
 	  return ok(jsonText);
   }
