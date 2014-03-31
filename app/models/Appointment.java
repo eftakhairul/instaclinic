@@ -97,14 +97,14 @@ public class Appointment extends Model {
 	}
 	
 	public User getDoctor() {
-        return this.user;
+        return this.doctor;
 	}
 	
 	public void setDoctor(User user) {
 		if(user.getUserRole() != UserRole.DOCTOR) {
-			//return;
+			return;
 		}
-        this.user = user;
+        this.doctor = user;
 	}
 
     public Date getCreateDate() {

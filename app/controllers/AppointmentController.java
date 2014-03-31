@@ -140,6 +140,9 @@ public class AppointmentController extends Controller
       }
       
       Appointment appointment = appointmentForm.get();
+      System.out.println("Doctor Id : "+appointmentForm.field("doctor_id").value());
+      User doctor = User.findById(Long.parseLong(appointmentForm.field("doctor_id").value()));
+      appointment.setDoctor(doctor);
       
       //Appointment appointment = new Appointment(new Room());
       
